@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wasaa Bot - 聯絡我們</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = { theme: { extend: { colors: { discord: '#5865F2', dark: '#2c2f33', darker: '#23272a', card: '#1e2124' } } } }
     </script>
 </head>
+
 <body class="bg-darker text-gray-100 font-sans flex flex-col min-h-screen">
-    
+
     <nav class="fixed w-full z-50 bg-dark/95 backdrop-blur border-b border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
@@ -25,7 +28,8 @@
                     <a href="features.html" class="hover:text-discord transition px-3 py-2 font-medium">功能特色</a>
                     <a href="commands.html" class="hover:text-discord transition px-3 py-2 font-medium">指令列表</a>
                     <a href="contact.html" class="text-discord font-bold px-3 py-2 border-b-2 border-discord">聯絡我們</a>
-                    <a href="dashboard.html" class="bg-discord hover:bg-blue-600 px-4 py-2 rounded-full transition shadow-lg text-sm font-bold">控制台</a>
+                    <a href="dashboard.html"
+                        class="bg-discord hover:bg-blue-600 px-4 py-2 rounded-full transition shadow-lg text-sm font-bold">控制台</a>
                 </div>
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none p-2">
@@ -34,20 +38,26 @@
                 </div>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden border-t border-gray-800 bg-darker transition-all duration-300 ease-in-out">
+        <div id="mobile-menu"
+            class="hidden md:hidden border-t border-gray-800 bg-darker transition-all duration-300 ease-in-out">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html" class="text-gray-300 hover:text-white hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium">首頁</a>
-                <a href="features.html" class="text-gray-300 hover:text-white hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium">功能特色</a>
-                <a href="commands.html" class="text-gray-300 hover:text-white hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium">指令列表</a>
-                <a href="contact.html" class="bg-discord/10 text-discord block px-3 py-2 rounded-md text-base font-bold">聯絡我們</a>
-                <a href="dashboard.html" class="text-gray-300 hover:text-white hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium">控制台</a>
+                <a href="index.html"
+                    class="text-gray-300 hover:text-white hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium">首頁</a>
+                <a href="features.html"
+                    class="text-gray-300 hover:text-white hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium">功能特色</a>
+                <a href="commands.html"
+                    class="text-gray-300 hover:text-white hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium">指令列表</a>
+                <a href="contact.html"
+                    class="bg-discord/10 text-discord block px-3 py-2 rounded-md text-base font-bold">聯絡我們</a>
+                <a href="dashboard.html"
+                    class="text-gray-300 hover:text-white hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium">控制台</a>
             </div>
         </div>
     </nav>
 
     <div class="flex-grow pt-32 pb-20 max-w-3xl mx-auto px-4 w-full">
         <div class="text-center mb-12">
-            <h1 class="text-4xl font-bold mb-4">聯絡 <span class="text-discord">Wasaa 團隊</span></h1>
+            <h1 class="text-4xl font-bold mb-4">聯絡 <span class="text-discord">Wasaa 開發者</span></h1>
             <p class="text-gray-400">有任何問題、Bug 回報或合作提案嗎？填寫下方表單，我們會盡快回覆您。</p>
         </div>
 
@@ -56,13 +66,13 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-gray-400 mb-2">您的暱稱 (Name)</label>
-                        <input type="text" name="名稱" required 
+                        <input type="text" name="名稱" required
                             class="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-discord transition text-white"
                             placeholder="Wasaa Fan">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-400 mb-2">Discord ID / 用戶名</label>
-                        <input type="text" name="Discord ID" required 
+                        <input type="text" name="Discord ID" required
                             class="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-discord transition text-white"
                             placeholder="username#1234">
                     </div>
@@ -70,7 +80,8 @@
 
                 <div>
                     <label class="block text-sm font-medium text-gray-400 mb-2">主旨 (Subject)</label>
-                    <select name="主旨" class="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-discord transition text-white">
+                    <select name="主旨"
+                        class="w-full bg-dark border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-discord transition text-white">
                         <option>🐛 Bug 回報</option>
                         <option>💡 功能建議</option>
                         <option>🤝 合作洽談</option>
@@ -100,44 +111,35 @@
     </footer>
 
     <script>
-        // 【⚠️ 重要】請換成你的 Google Apps Script 網頁應用程式網址
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxdHasO5XnxLkxJxNktif4WccrWUgrIO3E0h8T5kdsjSzMmx8kr8p6ZvoDipMOkP1fw7A/exec';
 
         const form = document.getElementById('contactForm');
         const btn = document.getElementById('submitBtn');
         const originalBtnContent = btn.innerHTML;
-
-        // 手機版選單邏輯
         const menuBtn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
-        if(menuBtn && menu){
+        if (menuBtn && menu) {
             menuBtn.addEventListener('click', () => {
                 menu.classList.toggle('hidden');
             });
         }
 
-        // 表單提交邏輯
         form.addEventListener('submit', e => {
             e.preventDefault();
-            
-            // 鎖定按鈕避免重複發送
             btn.disabled = true;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 發送中...';
             btn.classList.add('opacity-75', 'cursor-not-allowed');
 
-            fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form)})
+            fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form) })
                 .then(response => {
-                    // 成功
                     alert('✅ 訊息已發送！感謝您的回饋，我們會盡快處理。');
                     form.reset();
                 })
                 .catch(error => {
-                    // 失敗
                     console.error('Error!', error.message);
                     alert('❌ 發送失敗，請稍後再試。');
                 })
                 .finally(() => {
-                    // 恢復按鈕
                     btn.disabled = false;
                     btn.innerHTML = originalBtnContent;
                     btn.classList.remove('opacity-75', 'cursor-not-allowed');
@@ -145,4 +147,5 @@
         });
     </script>
 </body>
+
 </html>
