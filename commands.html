@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wasaa Bot - 完整指令手冊</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        discord: '#5865F2',
+                        dark: '#2c2f33',
+                        darker: '#23272a',
+                        card: '#1e2124',
+                        'card-hover': '#32353b'
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans TC', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body
+    class="bg-darker text-gray-100 font-sans antialiased selection:bg-discord selection:text-white flex flex-col min-h-screen">
+
+    <nav class="fixed w-full z-50 bg-dark/95 backdrop-blur border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-3">
+                    <img src="headshot.png" alt="Logo" class="h-10 w-10 rounded-full border-2 border-discord">
+                    <span class="font-bold text-xl tracking-wide">Wasaa Bot</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="hover:text-discord transition px-3 py-2 font-medium">首頁</a>
+                    <a href="features.html" class="hover:text-discord transition px-3 py-2 font-medium">功能特色</a>
+                    <a href="commands.html" class="text-discord font-bold px-3 py-2 border-b-2 border-discord">指令列表</a>
+                    <a href="dashboard.html"
+                        class="bg-discord hover:bg-blue-600 px-4 py-2 rounded-full transition shadow-lg text-sm font-bold">控制台</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex-grow pt-32 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4">指令使用手冊</h1>
+            <p class="text-gray-400 text-lg">目前共收錄 <span class="text-discord font-bold">21</span> 個指令，支援參數與權限管理</p>
+        </div>
+
+        <div class="mb-16 animate-fade-in-up">
+            <div class="flex items-center mb-6 pb-2 border-b border-gray-700">
+                <div class="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center text-red-500 mr-4">
+                    <i class="fa-solid fa-shield-halved text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold">核心與防護設定</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-card hover:bg-card-hover p-6 rounded-xl border border-gray-800 transition duration-300">
+                    <div class="flex justify-between items-start mb-3">
+                        <code class="text-discord bg-discord/10 px-3 py-1 rounded font-mono font-bold">/幫助</code>
+                        <span class="bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded">所有人</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">呼叫互動式控制面板，管理員可進行設定，一般成員可查看指南。</p>
+                </div>
+
+                <div class="bg-card hover:bg-card-hover p-6 rounded-xl border border-gray-800 transition duration-300">
+                    <div class="flex justify-between items-start mb-3">
+                        <code class="text-discord bg-discord/10 px-3 py-1 rounded font-mono font-bold">/清除 [數量]</code>
+                        <span class="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded">管理訊息</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">批次刪除指定數量的訊息，保持頻道整潔。</p>
+                </div>
+
+                <div class="bg-card hover:bg-card-hover p-6 rounded-xl border border-gray-800 transition duration-300">
+                    <div class="flex justify-between items-start mb-3">
+                        <code
+                            class="text-discord bg-discord/10 px-3 py-1 rounded font-mono font-bold">/防護設定 日誌 [頻道]</code>
+                        <span class="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded">管理員</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">設定日誌頻道 (必要)。所有違規攔截、刪除訊息紀錄都會發送到這裡。</p>
+                </div>
+
+                <div class="bg-card hover:bg-card-hover p-6 rounded-xl border border-gray-800 transition duration-300">
+                    <div class="flex justify-between items-start mb-3">
+                        <code
+                            class="text-discord bg-discord/10 px-3 py-1 rounded font-mono font-bold">/防護設定 禁言 [秒數]</code>
+                        <span class="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded">管理員</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">設定觸發刷頻或違規時，系統自動將成員禁言的秒數。</p>
+                </div>
+
+                <div class="bg-card hover:bg-card-hover p-6 rounded-xl border border-gray-800 transition duration-300">
+                    <div class="flex justify-between items-start mb-3">
+                        <code
+                            class="text-discord bg-discord/10 px-3 py-1 rounded font-mono font-bold">/防護設定 限制 [參數]</code>
+                        <span class="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded">管理員</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">設定文字牆判定的 <code>最大字數</code> 與 <code>最大行數</code>。</p>
+                </div>
+
+                <div class="bg-card hover:bg-card-hover p-6 rounded-xl border border-gray-800 transition duration-300">
+                    <div class="flex justify-between items-start mb-3">
+                        <code class="text-discord bg-discord/10 px-3 py-1 rounded font-mono font-bold">/防護設定 白名單</code>
+                        <span class="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded">管理員</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">新增或移除豁免檢查的 <code>身分組</code> 或 <code>頻道</code>。</p>
+                </div>
+
+                <div class="bg-card hover:bg-card-hover p-6 rounded-xl border border-gray-800 transition duration-300">
+                    <div class="flex justify-between items-start mb-3">
+                        <code
+                            class="text-discord bg-discord/10 px-3 py-1 rounded font-mono font-bold">/警告 刷頻警告重置 [成員]</code>
+                        <span class="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded">管理員</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">手動將某成員的累計警告次數歸零。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-16 animate-fade-in-up" style="animation-delay: 0.1s;">
+            <div class="flex items-center mb-6 pb-2 border-b border-gray-700">
+                <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-500 mr-4">
+                    <i class="fa-solid fa-ticket text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold">工單系統</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div
+                    class="bg-card hover:bg-card-hover p-6 rounded-xl border border-gray-800 transition duration-300 col-span-1 md:col-span-2">
+                    <div class="flex justify-between items-start mb-3">
+                        <code
+                            class="text-discord bg-discord/10 px-3 py-1 rounded font-mono font-bold">/工單 設定 [多項參數]</code>
+                        <span class="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded">管理員</span>
+                    </div>
+                    <p class="text-gray-300 text-sm mb-2">發送工單面板。參數包含：</p>
+                    <ul class="list-disc list-inside text-gray-400 text-xs space-y-1 ml-2">
+                        <li><code>channel</code>: 面板發送頻道</li>
+                        <li><code>title / description</code>: 面板標題與描述</li>
+                        <li><code>mode</code>: 模式 (channel: 獨立頻道 / thread: 討論串)</li>
+                        <li><code>support_role</code>: 客服身分組 (工單建立時自動標記)</li>
+                    </ul>
+                </div>
+
+                <div class="bg-card hover:bg-card-hover p-6 rounded-xl border border-gray-800 transition duration-300">
+                    <div class="flex justify-between items-start mb-3">
+                        <code
+                            class="text-discord bg-discord/10 px-3 py-1 rounded font-mono font-bold">/工單 啟用 / 停用</code>
+                        <span class="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded">管理員</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">開啟或關閉整個工單系統的功能。</p>
+                </div>
+
+                <div class="bg-card hover:bg-card-hover p-6 rounded-xl border border-gray-800 transition duration-300">
+                    <div class="flex justify-between items-start mb-3">
+                        <code
+                            class="text-discord bg-discord/10 px-3 py-1 rounded font-mono font-bold">/工單 清除用戶 [成員]</code>
+                        <span class="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded">管理員</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">強制清除某成員的「活躍工單」狀態（用於解決成員無法開新單的問題）。</p>
+                </div>
+
+                <div class="bg-card hover:bg-card-hover p-6 rounded-xl border border-gray-800 transition duration-300">
+                    <div class="flex justify-between items-start mb-3">
+                        <code
+                            class="text-discord bg-discord/10 px-3 py-1 rounded font-mono font-bold">/工單 加入 [成員]</code>
+                        <span class="bg-yellow-500/20 text-yellow-400 text-xs px-2 py-1 rounded">限工單頻道</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">將其他成員加入當前工單（賦予查看與發言權限）。</p>
+                </div>
+
+                <div class="bg-card hover:bg-card-hover p-6 rounded-xl border border-gray-800 transition duration-300">
+                    <div class="flex justify-between items-start mb-3">
+                        <code
+                            class="text-discord bg-discord/10 px-3 py-1 rounded font-mono font-bold">/工單 移除 [成員]</code>
+                        <span class="bg-yellow-500/20 text-yellow-400 text-xs px-2 py-1 rounded">限工單頻道</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">將成員移出當前工單。</p>
+                </div>
+
+                <div class="bg-card hover:bg-card-hover p-6 rounded-xl border border-gray-800 transition duration-300">
+                    <div class="flex justify-between items-start mb-3">
+                        <code class="text-discord bg-discord/10 px-3 py-1 rounded font-mono font-bold">/工單 重置</code>
+                        <span class="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded">管理員</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">重置所有工單設定與計數器（危險操作）。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-16 animate-fade-in-up" style="animation-delay: 0.2s;">
+            <div class="flex items-center mb-6 pb-2 border-b border-gray-700">
+                <div class="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center text-green-500 mr-4">
+                    <i class="fa-solid fa-user-tag text-xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold">身分組與監控</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div
+                    class="bg-card hover:bg-card-hover p-6 rounded-xl border border-gray-800 transition duration-300 col-span-1 md:col-span-2">
+                    <div class="flex justify-between items-start mb-3">
+                        <code
+                            class="text-discord bg-discord/10 px-3 py-1 rounded font-mono font-bold">/身分組 自助領取身分組</code>
+                        <span class="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded">管理員</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">在指定頻道發送一個按鈕，成員點擊後可自動獲得或移除該身分組。</p>
+                    <p class="text-gray-500 text-xs mt-2">參數: <code>channel</code>, <code>role</code>,
+                        <code>title</code>, <code>button_label</code>...
+                    </p>
+                </div>
+
+                <div class="bg-card hover:bg-card-hover p-6 rounded-xl border border-gray-800 transition duration-300">
+                    <div class="flex justify-between items-start mb-3">
+                        <code class="text-discord bg-discord/10 px-3 py-1 rounded font-mono font-bold">/身分監控 新增</code>
+                        <span class="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded">管理員</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">新增一條監控規則。當有人獲得或失去指定身分組時，通知到指定頻道。</p>
+                </div>
+
+                <div class="bg-card hover:bg-card-hover p-6 rounded-xl border border-gray-800 transition duration-300">
+                    <div class="flex justify-between items-start mb-3">
+                        <code class="text-discord bg-discord/10 px-3 py-1 rounded font-mono font-bold">/身分監控 列表</code>
+                        <span class="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded">管理員</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">查看目前設定的所有身分監控規則 ID。</p>
+                </div>
+
+                <div class="bg-card hover:bg-card-hover p-6 rounded-xl border border-gray-800 transition duration-300">
+                    <div class="flex justify-between items-start mb-3">
+                        <code
+                            class="text-discord bg-discord/10 px-3 py-1 rounded font-mono font-bold">/身分監控 移除 [ID]</code>
+                        <span class="bg-red-500/20 text-red-400 text-xs px-2 py-1 rounded">管理員</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">移除指定的監控規則。</p>
+                </div>
+
+                <div class="bg-card hover:bg-card-hover p-6 rounded-xl border border-gray-800 transition duration-300">
+                    <div class="flex justify-between items-start mb-3">
+                        <code
+                            class="text-discord bg-discord/10 px-3 py-1 rounded font-mono font-bold">/身分組 給予 [成員] [身分]</code>
+                        <span class="bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">管理身分</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">手動給予成員身分組，並發送日誌紀錄。</p>
+                </div>
+
+                <div class="bg-card hover:bg-card-hover p-6 rounded-xl border border-gray-800 transition duration-300">
+                    <div class="flex justify-between items-start mb-3">
+                        <code
+                            class="text-discord bg-discord/10 px-3 py-1 rounded font-mono font-bold">/身分組 移除 [成員] [身分]</code>
+                        <span class="bg-blue-500/20 text-blue-400 text-xs px-2 py-1 rounded">管理身分</span>
+                    </div>
+                    <p class="text-gray-300 text-sm">手動移除成員身分組，並發送日誌紀錄。</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="bg-darker py-6 border-t border-gray-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-500 text-sm">© 2025 wasaa 版權所有 | 使用 <code>/幫助</code> 在 Discord 中查看更多資訊。</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
