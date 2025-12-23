@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>frs工單教學</title>
+    <style>
+        /* 清除瀏覽器預設邊距 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000; /* 背景全黑 */
+            overflow: hidden; /* 防止出現捲軸 */
+            
+            /* 使用 Flexbox 讓圖片完美置中 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 圖片設定 */
+        img {
+            max-width: 100%;  /* 寬度不超過螢幕 */
+            max-height: 100%; /* 高度不超過螢幕 */
+            object-fit: contain; /* 保持圖片比例，完整顯示 */
+            box-shadow: 0 0 20px rgba(0,0,0,0.5); /* 加一點陰影更有質感 */
+        }
+    </style>
+</head>
+<body>
+    <img src="frs_.gif" alt="Photo">
+</body>
+</html>
