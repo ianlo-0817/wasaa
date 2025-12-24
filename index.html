@@ -6,12 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wasaa Bot - 首頁</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
-            theme: { extend: { colors: { discord: '#5865F2', dark: '#2c2f33', darker: '#23272a', card: '#1e2124' }, fontFamily: { sans: ['Noto Sans TC', 'sans-serif'] } } }
+            theme: {
+                extend: {
+                    colors: {
+                        discord: '#5865F2',
+                        dark: '#2c2f33',
+                        darker: '#23272a',
+                        card: '#1e2124',
+                        'card-hover': '#32353b'
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans TC', 'sans-serif']
+                    }
+                }
+            }
         }
     </script>
     <style>
@@ -43,21 +55,20 @@
     </style>
 </head>
 
-<body class="bg-darker text-gray-100 font-sans antialiased">
+<body class="bg-darker text-gray-100 font-sans antialiased flex flex-col min-h-screen">
+
     <nav class="fixed w-full z-50 bg-dark/95 backdrop-blur border-b border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex items-center gap-3">
-                    <img src="headshot.png" alt="Logo" class="h-10 w-10 rounded-full border-2 border-discord">
+                    <img src="/static/2025-10-09_8.16.05.jpg" alt="Logo" class="h-10 w-10 rounded-full border-2 border-discord">
                     <span class="font-bold text-xl tracking-wide">Wasaa Bot</span>
                 </div>
                 <div class="hidden md:flex space-x-8">
-                    <a href="index.html" class="text-discord font-bold px-3 py-2">首頁</a>
-                    <a href="features.html" class="hover:text-discord transition px-3 py-2">功能特色</a>
-                    <a href="commands.html" class="hover:text-discord transition px-3 py-2">指令列表</a>
-                    <a href="contact.html" class="hover:text-discord transition px-3 py-2">聯絡我們</a>
-                    <a href="dashboard.html"
-                        class="bg-discord hover:bg-blue-600 px-4 py-2 rounded-full transition shadow-lg">控制台</a>
+                    <a href="/" class="text-discord font-bold px-3 py-2">首頁</a>
+                    <a href="/features" class="hover:text-discord transition px-3 py-2">功能特色</a>
+                    <a href="/commands" class="hover:text-discord transition px-3 py-2">指令列表</a>
+                    <a href="/dashboard" class="bg-discord hover:bg-blue-600 px-4 py-2 rounded-full transition shadow-lg">控制台</a>
                 </div>
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none p-2">
@@ -66,34 +77,26 @@
                 </div>
             </div>
         </div>
-        <div id="mobile-menu"
-            class="hidden md:hidden border-t border-gray-800 bg-darker transition-all duration-300 ease-in-out">
+        <div id="mobile-menu" class="hidden md:hidden border-t border-gray-800 bg-darker transition-all duration-300 ease-in-out">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html"
-                    class="bg-discord/10 text-discord block px-3 py-2 rounded-md text-base font-bold">首頁</a>
-                <a href="features.html"
-                    class="text-gray-300 hover:text-white hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium">功能特色</a>
-                <a href="commands.html"
-                    class="text-gray-300 hover:text-white hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium">指令列表</a>
-                <a href="contact.html"
-                    class="text-gray-300 hover:text-white hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium">聯絡我們</a>
-                <a href="dashboard.html"
-                    class="text-gray-300 hover:text-white hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium">控制台</a>
+                <a href="/" class="bg-discord/10 text-discord block px-3 py-2 rounded-md text-base font-bold">首頁</a>
+                <a href="/features" class="text-gray-300 hover:text-white hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium">功能特色</a>
+                <a href="/commands" class="text-gray-300 hover:text-white hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium">指令列表</a>
+                <a href="/dashboard" class="text-gray-300 hover:text-white hover:bg-gray-700 block px-3 py-2 rounded-md text-base font-medium">控制台</a>
             </div>
         </div>
     </nav>
 
-    <section
-        class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative overflow-hidden pb-20 pt-32">
+    <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 relative overflow-hidden pb-20 pt-32">
         <div class="relative z-10 animate-fade-in-up">
-            <img src="headshot.png" alt="Bot Avatar"
-                class="w-48 h-48 rounded-full border-4 border-discord shadow-[0_0_30px_rgba(88,101,242,0.6)] mx-auto mb-8 object-cover">
+            <img src="/static/2025-10-09_8.16.05.jpg" alt="Bot Avatar" class="w-48 h-48 rounded-full border-4 border-discord shadow-[0_0_30px_rgba(88,101,242,0.6)] mx-auto mb-8 object-cover">
             <h1 class="text-5xl md:text-7xl font-extrabold mb-6">
                 守護你的 <span class="text-discord">Discord</span> 社群
             </h1>
             <p class="mt-4 text-xl text-gray-400 max-w-2xl mx-auto">
                 集結強大的防刷頻系統、自動化工單服務與精細的身分組管理。<br>讓管理變得前所未有的簡單。
             </p>
+            
             <div class="mt-12 grid grid-cols-2 gap-8 max-w-lg mx-auto">
                 <div class="bg-card p-4 rounded-xl border-t-4 border-discord shadow-lg">
                     <p class="text-gray-400 text-sm">服務群組</p>
@@ -104,132 +107,107 @@
                     <p class="text-3xl font-bold text-white" id="member-count">Loading...</p>
                 </div>
             </div>
+
             <div class="mt-12">
-                <a href="https://discord.com/oauth2/authorize?client_id=1448007326366699612&permissions=8&integration_type=0&scope=bot"
-                    target="_blank"
-                    class="bg-discord text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-600 transition shadow-lg hover:shadow-discord/50 transform hover:-translate-y-1 inline-block">
+                <a href="https://discord.com/oauth2/authorize?client_id=YOUR_CLIENT_ID&permissions=8&integration_type=0&scope=bot" target="_blank" class="bg-discord text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-600 transition shadow-lg hover:shadow-discord/50 transform hover:-translate-y-1 inline-block">
                     <i class="fa-brands fa-discord mr-2"></i> 立即邀請機器人
                 </a>
             </div>
         </div>
 
-        <div class="mt-32 max-w-4xl w-full text-left mx-auto">
+        <div class="mt-32 max-w-4xl w-full text-left mx-auto relative z-10">
             <h2 class="text-2xl font-bold text-center mb-8 text-gray-200">法律與條款</h2>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="bg-card rounded-xl border border-gray-800 overflow-hidden">
                     <details class="group">
-                        <summary
-                            class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-800 transition select-none">
-                            <span class="font-bold text-lg text-discord"><i class="fa-solid fa-file-contract mr-2"></i>
-                                服務條款 (TOS)</span>
-                            <span class="transition group-open:rotate-180"><i
-                                    class="fa-solid fa-chevron-down"></i></span>
+                        <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-800 transition select-none">
+                            <span class="font-bold text-lg text-discord"><i class="fa-solid fa-file-contract mr-2"></i> 服務條款 (TOS)</span>
+                            <span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down"></i></span>
                         </summary>
-                        <div
-                            class="p-6 pt-0 text-sm text-gray-400 space-y-4 border-t border-gray-800 leading-relaxed h-96 overflow-y-auto custom-scrollbar">
-                            <p class="italic text-xs">當您使用我們的wasaa機器人服務時，代表您同意以下條款和條件：</p>
+                        <div class="p-6 pt-0 text-sm text-gray-400 space-y-4 border-t border-gray-800 leading-relaxed h-96 overflow-y-auto custom-scrollbar">
+                            <p class="italic text-xs">當您使用我們的 wasaa 機器人服務時，代表您同意以下條款和條件：</p>
                             <div><strong class="text-gray-200 block mb-1">1. 服務內容</strong>
-                                <p>我們提供的Discord機器人服務是一種自動化程式，可以幫助您管理和監控您的Discord伺服器。我們會盡力保證服務的正常運作，但無法保證服務的完全無故障和無中斷。
-                                </p>
+                                <p>我們提供的Discord機器人服務是一種自動化程式，可以幫助您管理和監控您的Discord伺服器。</p>
                             </div>
                             <div><strong class="text-gray-200 block mb-1">2. 使用限制</strong>
-                                <p>您不得使用我們的Discord機器人服務進行任何非法或違反道德的行為。您的使用行為應遵守Discord平台的使用條款和政策，以及其他相關法律法規。如果您的使用行為被發現有違反上述規定，我們有權停止您的使用權限，並保留追究您法律責任的權利。
-                                </p>
+                                <p>您不得使用我們的Discord機器人服務進行任何非法或違反道德的行為。您的使用行為應遵守Discord平台的使用條款和政策。</p>
                             </div>
                             <div><strong class="text-gray-200 block mb-1">3. 隱私保護</strong>
-                                <p>我們會嚴格保護您的個人資料和隱私，不會將其泄露給任何第三方。但在法律要求下，我們可能會被迫透露您的個人資料。</p>
+                                <p>我們會嚴格保護您的個人資料和隱私，不會將其泄露給任何第三方。</p>
                             </div>
                             <div><strong class="text-gray-200 block mb-1">4. 責任限制</strong>
-                                <p>我們不對任何因使用我們的Discord機器人服務而導致的損失或損害負責。您使用本服務所產生的風險和後果由您自行承擔。</p>
+                                <p>我們不對任何因使用我們的Discord機器人服務而導致的損失或損害負責。</p>
                             </div>
                             <div><strong class="text-gray-200 block mb-1">5. 禁止成人內容</strong>
-                                <p>您不得使用我們的Discord機器人服務傳送或促進任何成人或性別相關的內容，包括但不限於成人圖像、文字、視頻或任何其他形式的成人娛樂。我們嚴禁此類內容的傳播，並將視情況採取適當措施，包括停止您的使用權限。
-                                </p>
+                                <p>您不得使用我們的Discord機器人服務傳送或促進任何成人或性別相關的內容。</p>
                             </div>
                             <div><strong class="text-gray-200 block mb-1">6. 服務變更和終止</strong>
-                                <p>我們保留隨時變更或終止本服務的權利，並不會對您或任何第三方承擔責任。</p>
+                                <p>我們保留隨時變更或終止本服務的權利。</p>
                             </div>
                             <div><strong class="text-gray-200 block mb-1">7. 準據法和管轄權</strong>
-                                <p>本條款和條件受中華民國台灣相關法律管轄</p>
+                                <p>本條款和條件受中華民國台灣相關法律管轄。</p>
                             </div>
-                            <p class="text-xs border-t border-gray-700 pt-2 mt-2">
-                                如果您使用我們的Discord機器人服務，即代表您已閱讀、理解並同意上述條款和條件。</p>
+                            <p class="text-xs border-t border-gray-700 pt-2 mt-2">如果您使用我們的Discord機器人服務，即代表您已閱讀、理解並同意上述條款和條件。</p>
                         </div>
                     </details>
                 </div>
+
                 <div class="bg-card rounded-xl border border-gray-800 overflow-hidden">
                     <details class="group">
-                        <summary
-                            class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-800 transition select-none">
-                            <span class="font-bold text-lg text-green-500"><i class="fa-solid fa-user-shield mr-2"></i>
-                                隱私權政策 (Privacy)</span>
-                            <span class="transition group-open:rotate-180"><i
-                                    class="fa-solid fa-chevron-down"></i></span>
+                        <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-800 transition select-none">
+                            <span class="font-bold text-lg text-green-500"><i class="fa-solid fa-user-shield mr-2"></i> 隱私權政策 (Privacy)</span>
+                            <span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down"></i></span>
                         </summary>
-                        <div
-                            class="p-6 pt-0 text-sm text-gray-400 space-y-4 border-t border-gray-800 leading-relaxed h-96 overflow-y-auto custom-scrollbar">
+                        <div class="p-6 pt-0 text-sm text-gray-400 space-y-4 border-t border-gray-800 leading-relaxed h-96 overflow-y-auto custom-scrollbar">
                             <p class="italic text-xs">wasaa非常重視您的隱私權，以下是我們的機器人隱私權政策：</p>
                             <div><strong class="text-gray-200 block mb-1">1. 我們所收集的資料</strong>
-                                <p>當您使用我們的Discord機器人服務時，我們可能會收集您的Discord帳戶資訊、伺服器設定和使用記錄等相關資料。這些資料僅用於提供服務和改進服務品質，我們不會將其用於其他任何用途。
-                                </p>
+                                <p>我們可能會收集您的Discord帳戶資訊、伺服器設定和使用記錄等相關資料。</p>
                             </div>
                             <div><strong class="text-gray-200 block mb-1">2. 我們如何使用所收集的資料</strong>
-                                <p>我們會使用所收集的資料來提供和改進我們的Discord機器人服務。例如，我們可能會根據您的伺服器設定和使用記錄來調整機器人的行為，以更好地滿足您的需求。</p>
+                                <p>我們會使用所收集的資料來提供和改進我們的Discord機器人服務。</p>
                             </div>
                             <div><strong class="text-gray-200 block mb-1">3. 我們如何保護您的資料</strong>
-                                <p>我們會採取適當的技術和組織措施來保護您的資料安全。我們的服務運行在安全的伺服器上，並使用加密技術來保護您的資料傳輸。我們僅授權有需要的員工訪問您的資料，並要求他們遵守保密協議。
-                                </p>
+                                <p>我們會採取適當的技術和組織措施來保護您的資料安全。</p>
                             </div>
                             <div><strong class="text-gray-200 block mb-1">4. 我們如何分享您的資料</strong>
-                                <p>我們不會將您的資料出售、交易或轉移給任何第三方。但在以下情況下，我們可能會與第三方分享您的資料：當我們需要與第三方合作提供服務時，例如網路服務供應商、支付處理商等；或當我們受到法律、法規或政府要求時。
-                                </p>
+                                <p>我們不會將您的資料出售、交易或轉移給任何第三方。</p>
                             </div>
                             <div><strong class="text-gray-200 block mb-1">5. 我們如何保留您的資料</strong>
-                                <p>我們僅在必要時保留您的資料，以提供服務和遵守法律要求。我們會根據相關法律法規規定的時間範圍進行資料保留，超過保留期限後，我們會銷毀或匿名化您的資料。</p>
+                                <p>我們僅在必要時保留您的資料，以提供服務和遵守法律要求。</p>
                             </div>
-                            <div><strong class="text-gray-200 block mb-1">6. 您的權利</strong>
-                                <p>您有權要求查詢、更正、刪除或限制我們使用您的資料。您也可以隨時撤回您的同意，我們會在法律允許的範圍內處理您的請求。如果您有任何關於隱私權政策的問題或者需要行使您的權利，請聯繫我們的客服人員，我們會盡快回覆您的請求。
-                                </p>
-                            </div>
-                            <div><strong class="text-gray-200 block mb-1">7. 隱私權政策的變更</strong>
-                                <p>我們保留隨時修改本隱私權政策的權利，請您定期查看本政策以獲取最新資訊。如果我們對隱私權政策作出重大變更，我們會在網站上發布通知或以其他方式通知您。如果您繼續使用我們的服務，即表示您同意受到修改後的隱私權政策的約束。
-                                </p>
-                            </div>
-                            <p class="text-xs border-t border-gray-700 pt-2 mt-2">
-                                如果您對我們的Discord機器人隱私權政策有任何問題或疑慮，請隨時聯繫我們管理團隊。</p>
+                            <p class="text-xs border-t border-gray-700 pt-2 mt-2">如果您對我們的Discord機器人隱私權政策有任何問題或疑慮，請隨時聯繫我們管理團隊。</p>
                         </div>
                     </details>
                 </div>
             </div>
         </div>
+
         <div class="absolute top-0 left-0 w-full h-full -z-10 opacity-30 pointer-events-none">
-            <div
-                class="absolute top-1/4 left-1/4 w-96 h-96 bg-discord rounded-full mix-blend-multiply filter blur-[128px]">
-            </div>
-            <div
-                class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-[128px]">
-            </div>
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-discord rounded-full mix-blend-multiply filter blur-[128px]"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-[128px]"></div>
         </div>
     </section>
 
-    <footer class="bg-darker py-6 border-t border-gray-800 w-full">
+    <footer class="bg-darker py-6 border-t border-gray-800 w-full mt-auto">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-500 text-sm">© 2025 wasaa 版權所有</p>
+            <p class="text-gray-500 text-sm">© 2025 wasaa 版權所有 | 使用 <code>/幫助</code> 查看更多</p>
         </div>
     </footer>
 
     <script>
-        const BIN_ID = "693c36d1ae596e708f9555ea";
-
+        // === 手機版選單切換 ===
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
+        if (btn && menu) {
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+        }
 
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
-
+        // === 數字動畫 ===
         function animateValue(id, endValue, duration) {
             const obj = document.getElementById(id);
+            if (!obj) return;
             const startValue = 0;
             let startTime = null;
             function step(currentTime) {
@@ -247,20 +225,72 @@
             window.requestAnimationFrame(step);
         }
 
-        fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`)
+        // === 獲取統計數據 (改用本機 API) ===
+        // 這樣就不需要依賴外部 JSONBIN，直接讀取 webserver.py 的數據
+        fetch('/api/stats')
             .then(r => r.json())
             .then(data => {
-                const stats = data.record;
-                animateValue("guild-count", stats.guild_count, 2000);
-                animateValue("member-count", stats.member_count, 2000);
+                // webserver.py 回傳格式為 { guild_count: 123, member_count: 456 }
+                animateValue("guild-count", data.guild_count, 2000);
+                animateValue("member-count", data.member_count, 2000);
             })
             .catch((err) => {
-                console.error(err);
+                console.error("無法獲取統計數據:", err);
                 document.getElementById("guild-count").innerText = "-";
                 document.getElementById("member-count").innerText = "-";
             });
     </script>
+
+    <script>
+    (function() {
+        const spawnChance = 0.8; // 80% 機率出現
+        const sockImage = "https://cdn-icons-png.flaticon.com/512/744/744546.png";
+
+        function spawnStocking() {
+            if (Math.random() > spawnChance) return;
+
+            const img = document.createElement('img');
+            img.src = sockImage;
+            img.style.position = 'fixed';
+            img.style.width = '60px';
+            img.style.height = '60px';
+            img.style.cursor = 'pointer';
+            img.style.zIndex = '9999';
+            img.style.filter = 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))';
+            img.style.transition = 'transform 0.2s';
+            
+            // 隨機位置
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 100);
+            img.style.left = x + 'px';
+            img.style.top = y + 'px';
+
+            img.onmouseover = () => img.style.transform = 'scale(1.1) rotate(10deg)';
+            img.onmouseout = () => img.style.transform = 'scale(1) rotate(0deg)';
+
+            img.onclick = function() {
+                // 點擊後顯示等待狀態
+                img.style.cursor = 'wait';
+                
+                // 呼叫後端 API 請求一個全新代碼
+                fetch('/api/generate_sock')
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(`🎉 你撿到了一隻聖誕襪！\n\n這是一個【一次性代碼】，先搶先贏！\n代碼：${data.code}\n\n快去 Discord 輸入：\n/聖誕兌換 ${data.code}`);
+                        img.remove();
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert("❌ 連線錯誤，襪子溜走了...");
+                        img.remove();
+                    });
+            };
+
+            document.body.appendChild(img);
+        }
+
+        window.addEventListener('load', spawnStocking);
+    })();
+    </script>
 </body>
-
 </html>
-
