@@ -32,7 +32,6 @@
     </script>
     <style>
         body { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
-        /* 允許選取代碼區域 */
         .allow-select { -webkit-user-select: text !important; -moz-user-select: text !important; -ms-user-select: text !important; user-select: text !important; }
         
         details>summary { list-style: none; outline: none; }
@@ -48,7 +47,6 @@
     </style>
     
     <script>
-        // 🛡️ 安全防護：禁止 F12 與右鍵
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.onkeydown = e => {
             if(e.keyCode == 123) return false;
@@ -64,7 +62,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 <div class="flex items-center gap-3">
-                    <img src="/static/2025-10-09_8.16.05.jpg" alt="Logo" class="h-10 w-10 rounded-full border-2 border-discord">
+                    <img src="headshot.png" alt="Logo" class="h-10 w-10 rounded-full border-2 border-discord">
                     <span class="font-bold text-xl tracking-wide">Wasaa Bot</span>
                 </div>
                 <div class="hidden md:flex space-x-8">
@@ -94,7 +92,7 @@
                 <div class="bg-gradient-to-r from-red-600/30 via-green-600/30 to-red-600/30 backdrop-blur-md border border-christmas-gold/40 rounded-full px-6 py-2 inline-block shadow-2xl">
                     <div class="flex items-center justify-center gap-2">
                         <i class="fa-solid fa-socks text-christmas-gold"></i>
-                        <span class="font-bold text-christmas-gold text-sm">🎄 2025 聖誕尋寶活動進行中 🎄</span>
+                        <span class="font-bold text-christmas-gold text-sm md:text-base">🎄 聖誕尋寶活動：尋找隱藏代碼 🎄</span>
                         <i class="fa-solid fa-gift text-christmas-gold"></i>
                     </div>
                 </div>
@@ -102,9 +100,9 @@
         </div>
 
         <div class="relative z-10">
-            <img src="/static/2025-10-09_8.16.05.jpg" alt="Bot Avatar" class="w-40 h-40 md:w-48 md:h-48 rounded-full border-4 border-discord shadow-[0_0_30px_rgba(88,101,242,0.6)] mx-auto mb-8 object-cover">
+            <img src="headshot.png" alt="Bot Avatar" class="w-40 h-40 md:w-48 md:h-48 rounded-full border-4 border-discord shadow-[0_0_30px_rgba(88,101,242,0.6)] mx-auto mb-8 object-cover">
             <h1 class="text-5xl md:text-7xl font-extrabold mb-6">守護你的 <span class="text-discord">Discord</span> 社群</h1>
-            <p class="mt-4 text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed px-4">集結強大的防刷頻系統、自動化工單與精細身分組管理。</p>
+            <p class="mt-4 text-xl text-gray-400 max-w-2xl mx-auto px-4 leading-relaxed">集結防刷頻系統、自動化工單與精細身分組管理。</p>
             
             <div class="mt-12 grid grid-cols-2 gap-4 md:gap-8 max-w-lg mx-auto px-4">
                 <div class="bg-card p-4 rounded-xl border-t-4 border-discord shadow-lg">
@@ -119,29 +117,30 @@
 
             <div class="mt-12 max-w-2xl mx-auto px-4">
                 <div class="bg-card/70 backdrop-blur-sm p-6 rounded-2xl border border-christmas/30 shadow-xl">
-                    <h3 class="text-xl font-bold mb-6 text-christmas-gold">聖誕尋寶進度</h3>
+                    <h3 class="text-xl font-bold mb-6 text-christmas-gold flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-socks"></i> 聖誕尋寶進度
+                    </h3>
                     <div class="grid grid-cols-2 gap-4 mb-6">
-                        <div class="bg-dark/50 p-3 rounded-lg border border-gray-800">
+                        <div class="bg-dark/50 p-3 rounded-lg border border-gray-800 text-center">
                             <div class="text-2xl font-bold text-christmas-gold" id="hourlyRemaining">3</div>
-                            <div class="text-[10px] text-gray-500 uppercase">本小時剩餘</div>
+                            <div class="text-[10px] text-gray-500 uppercase mt-1">本小時剩餘</div>
                         </div>
-                        <div class="bg-dark/50 p-3 rounded-lg border border-gray-800">
+                        <div class="bg-dark/50 p-3 rounded-lg border border-gray-800 text-center">
                             <div class="text-2xl font-bold text-blue-500" id="collectedToday">0</div>
-                            <div class="text-[10px] text-gray-500 uppercase">累計發現</div>
+                            <div class="text-[10px] text-gray-500 uppercase mt-1">累計領取</div>
                         </div>
                     </div>
                     <div class="h-2 bg-gray-900 rounded-full overflow-hidden border border-gray-800">
                         <div id="progressBar" class="h-full bg-gradient-to-r from-green-600 to-red-600 transition-all duration-700" style="width: 0%"></div>
                     </div>
-                    <p class="text-[10px] text-gray-500 mt-2">提示：代碼可至 Discord 使用 <code>/聖誕兌換</code> 獲取積分</p>
                 </div>
             </div>
 
             <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center px-4">
-                <a href="https://discord.com/oauth2/authorize?client_id=1448007326366699612&permissions=8&scope=bot" target="_blank" class="bg-discord text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-600 transition transform hover:-translate-y-1">
+                <a href="https://discord.com/oauth2/authorize?client_id=1448007326366699612&permissions=8&scope=bot" target="_blank" class="bg-discord text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-600 transition shadow-lg transform hover:-translate-y-1">
                     <i class="fa-brands fa-discord mr-2"></i> 立即邀請機器人
                 </a>
-                <button onclick="showLeaderboard()" class="bg-christmas text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-red-600 transition transform hover:-translate-y-1">
+                <button onclick="showLeaderboard()" class="bg-christmas text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-red-600 transition shadow-lg transform hover:-translate-y-1">
                     <i class="fa-solid fa-trophy mr-2"></i> 查看積分榜
                 </button>
             </div>
@@ -157,15 +156,15 @@
                             <span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down"></i></span>
                         </summary>
                         <div class="p-6 pt-0 text-sm text-gray-400 space-y-4 border-t border-gray-800 h-96 overflow-y-auto custom-scrollbar leading-relaxed">
-                            <p class="italic text-xs">當您使用我們的 wasaa 機器人服務時，代表您同意以下條款和條件：</p>
+                            <p class="italic text-xs pt-4">當您使用我們的 wasaa 機器人服務時，代表您同意以下條款和條件：</p>
                             <div><strong class="text-gray-200 block mb-1">1. 服務內容</strong><p>我們提供的 Discord 機器人服務是一種自動化程式，可以幫助您管理和監控您的 Discord 伺服器。我們會盡力保證服務的正常運作，但無法保證服務的完全無故障和無中斷。</p></div>
                             <div><strong class="text-gray-200 block mb-1">2. 使用限制</strong><p>您不得使用我們的 Discord 機器人服務進行任何非法或違反道德的行為。您的使用行為應遵守 Discord 平台的使用條款和政策，以及其他相關法律法規。如果您的使用行為被發現有違反上述規定，我們有權停止您的使用權限，並保留追究您法律責任的權利。</p></div>
                             <div><strong class="text-gray-200 block mb-1">3. 隱私保護</strong><p>我們會嚴格保護您的個人資料和隱私，不會將其泄露給任何第三方。但在法律要求下，我們可能會被迫透露您的個人資料。</p></div>
                             <div><strong class="text-gray-200 block mb-1">4. 責任限制</strong><p>我們不對任何因使用我們的 Discord 機器人服務而導致的損失或損害負責。您使用本服務所產生的風險和後果由您自行承擔。</p></div>
-                            <div><strong class="text-gray-200 block mb-1">5. 禁止成人內容</strong><p>您不得使用我們的 Discord 機器人服務傳送或促進任何成人或性別相關的內容，包括但不限於成人圖像、文字、視頻或任何其他形式的成人娛樂。我們嚴禁此類內容的傳播，並將視情況採取適單措施，包括停止您的使用權限。</p></div>
+                            <div><strong class="text-gray-200 block mb-1">5. 禁止成人內容</strong><p>您不得使用我們的 Discord 機器人服務傳送或促進任何成人或性別相關的內容，包括但不限於成人圖像、文字、視頻或任何其他形式的成人娛樂。我們嚴禁此類內容的傳播，並將視情況採取適當措施，包括停止您的使用權限。</p></div>
                             <div><strong class="text-gray-200 block mb-1">6. 服務變更和終止</strong><p>我們保留隨時變更或終止本服務的權利，並不會對您或任何第三方承擔責任。</p></div>
                             <div><strong class="text-gray-200 block mb-1">7. 準據法和管轄權</strong><p>本條款和條件受中華民國台灣相關法律管轄。</p></div>
-                            <p class="text-xs border-t border-gray-700 pt-4">如果您使用我們的 Discord 機器人服務，即代表您已閱讀、理解並同意上述條款和條件。</p>
+                            <p class="text-xs border-t border-gray-700 pt-4 font-bold">如果您使用我們的 Discord 機器人服務，即代表您已閱讀、理解並同意上述條款和條件。</p>
                         </div>
                     </details>
                 </div>
@@ -176,15 +175,15 @@
                             <span class="transition group-open:rotate-180"><i class="fa-solid fa-chevron-down"></i></span>
                         </summary>
                         <div class="p-6 pt-0 text-sm text-gray-400 space-y-4 border-t border-gray-800 h-96 overflow-y-auto custom-scrollbar leading-relaxed">
-                            <p class="italic text-xs">wasaa 非常重視您的隱私權，以下是我們的機器人隱私權政策：</p>
+                            <p class="italic text-xs pt-4">wasaa 非常重視您的隱私權，以下是我們的機器人隱私權政策：</p>
                             <div><strong class="text-gray-200 block mb-1">1. 我們所收集的資料</strong><p>當您使用我們的 Discord 機器人服務時，我們可能會收集您的 Discord 帳戶資訊、伺服器設定和使用記錄等相關資料。這些資料僅用於提供服務和改進服務品質，我們不會將其用於其他任何用途。</p></div>
                             <div><strong class="text-gray-200 block mb-1">2. 我們如何使用所收集的資料</strong><p>我們會使用所收集的資料來提供和改進我們的 Discord 機器人服務。例如，我們可能會根據您的伺服器設定和使用記錄來調整機器人的行為，以更好地滿足您的需求。</p></div>
                             <div><strong class="text-gray-200 block mb-1">3. 我們如何保護您的資料</strong><p>我們會採取適當的技術和組織措施來保護您的資料安全。我們的服務運行在安全的伺服器上，並使用加密技術來保護您的資料傳輸。我們僅授權有需要的員工訪問您的資料，並要求他們遵守保密協議。</p></div>
                             <div><strong class="text-gray-200 block mb-1">4. 我們如何分享您的資料</strong><p>我們不會將您的資料出售、交易或轉移給任何第三方。但在以下情況下，我們可能會與第三方分享您的資料：當我們需要與第三方合作提供服務時，例如網路服務供應商、支付處理商等；或當我們受到法律、法規或政府要求時。</p></div>
                             <div><strong class="text-gray-200 block mb-1">5. 我們如何保留您的資料</strong><p>我們僅在必要時保留您的資料，以提供服務和遵守法律要求。我們會根據相關法律法規規定的時間範圍進行資料保留，超過保留期限後，我們會銷毀或匿名化您的資料。</p></div>
                             <div><strong class="text-gray-200 block mb-1">6. 您的權利</strong><p>您有權要求查詢、更正、刪除或限制我們使用您的資料。您也可以隨時撤回您的同意，我們會在法律允許的範圍內處理您的請求。如果您有任何關於隱私權政策的問題或者需要行使您的權利，請聯繫我們的客服人員，我們會盡快回覆您的請求。</p></div>
-                            <div><strong class="text-gray-200 block mb-1">7. 隱私權政策的變更</strong><p>我們保留隨時修改本隱私權政策的權利，請您定期查看本政策以獲取最新資訊。如果我們對隱私權政策作出重大變更，我們會在網站上發布通知或以其他方式通知您。</p></div>
-                            <p class="text-xs border-t border-gray-700 pt-4">如果您對我們的 Discord 機器人隱私權政策有任何問題或疑慮，請隨時聯繫我們管理團隊。</p>
+                            <div><strong class="text-gray-200 block mb-1">7. 隱私權政策的變更</strong><p>我們保留隨時修改本隱私權政策的權利，請您定期查看本政策以獲取最新資訊。如果我們對隱私權政策作出重大變更，我們會在網站上發布通知或以其他方式通知您。如果您繼續使用我們的服務，即表示您同意受到修改後的隱私權政策的約束。</p></div>
+                            <p class="text-xs border-t border-gray-700 pt-4 font-bold">如果您對我們的 Discord 機器人隱私權政策有任何問題或疑慮，請隨時聯繫我們管理團隊。</p>
                         </div>
                     </details>
                 </div>
@@ -209,9 +208,9 @@
                 <i class="fa-solid fa-trophy mr-2"></i> 聖誕積分排行榜
             </div>
             <div class="p-8 text-center">
-                <p class="text-gray-400 text-sm mb-6">詳細排名請在 Discord 伺服器輸入：</p>
+                <p class="text-gray-400 text-sm mb-6 leading-relaxed">即時排名請至 Discord 伺服器輸入：</p>
                 <div class="bg-black/60 p-4 rounded-lg border border-gray-800 mb-6 allow-select">
-                    <code class="text-christmas-gold text-lg font-mono">/聖誕積分榜</code>
+                    <code class="text-christmas-gold text-xl font-mono">/聖誕積分榜</code>
                 </div>
                 <button onclick="closeLeaderboard()" class="px-8 py-2 bg-gray-700 hover:bg-gray-600 rounded-full transition text-sm">關閉</button>
             </div>
@@ -219,10 +218,8 @@
     </div>
 
     <script>
-        // === UI 基礎功能 ===
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        if (btn) btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+        // === 1. 資料庫對接 (JSONBin) ===
+        const BIN_ID = "693c36d1ae596e708f9555ea";
 
         function animateValue(id, endValue, duration) {
             const obj = document.getElementById(id);
@@ -233,12 +230,28 @@
                 const progress = Math.min((timestamp - startTimestamp) / duration, 1);
                 obj.innerText = Math.floor(progress * endValue).toLocaleString();
                 if (progress < 1) window.requestAnimationFrame(step);
+                else obj.innerText = endValue.toLocaleString();
             };
             window.requestAnimationFrame(step);
         }
-        setTimeout(() => { animateValue("guild-count", 158, 2000); animateValue("member-count", 52340, 2000); }, 500);
 
-        // === 聖誕尋寶核心邏輯 ===
+        fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`)
+            .then(r => r.json())
+            .then(data => {
+                const stats = data.record;
+                animateValue("guild-count", stats.guild_count, 2000);
+                animateValue("member-count", stats.member_count, 2000);
+            })
+            .catch(() => {
+                document.getElementById("guild-count").innerText = "150+";
+                document.getElementById("member-count").innerText = "50,000+";
+            });
+
+        const mBtn = document.getElementById('mobile-menu-btn');
+        const mMenu = document.getElementById('mobile-menu');
+        if (mBtn) mBtn.addEventListener('click', () => mMenu.classList.toggle('hidden'));
+
+        // === 2. 聖誕系統 ===
         (function() {
             const encryptedCodes = [
                 "U09DSy1SRUQtMDE=", "U09DSy1HUk4tMDI=", "U09DSy1CTFUtMDM=", "U09DSy1ZRUwtMDQ=", "U09DSy1QTmstMDU=",
@@ -259,7 +272,7 @@
             let gameState = { collected: 0, remaining: MAX_PER_HOUR, lastHour: new Date().getHours() };
 
             function loadState() {
-                const saved = localStorage.getItem('wasaa_xmas_vfinal');
+                const saved = localStorage.getItem('wasaa_xmas_vfinal_fix');
                 const nowH = new Date().getHours();
                 if (saved) {
                     const parsed = JSON.parse(saved);
@@ -270,7 +283,7 @@
             }
 
             function saveState() {
-                localStorage.setItem('wasaa_xmas_vfinal', JSON.stringify(gameState));
+                localStorage.setItem('wasaa_xmas_vfinal_fix', JSON.stringify(gameState));
                 updateUI();
             }
 
@@ -282,7 +295,7 @@
             }
 
             function createSparkles(x, y) {
-                for (let i = 0; i < 12; i++) {
+                for (let i = 0; i < 15; i++) {
                     const s = document.createElement('div');
                     s.className = 'sparkle';
                     s.style.left = (x + Math.random() * 40 - 20) + 'px';
@@ -309,60 +322,53 @@
                     let score = code.includes('GIFT') ? 30 : (code.includes('SANTA') ? 50 : (code.includes('SOCK') ? 10 : 100));
                     
                     gameState.remaining--; gameState.collected++; saveState();
-                    sock.style.transform = 'scale(1.8) rotate(360deg)';
+                    sock.style.transform = 'scale(2) rotate(360deg)';
                     sock.style.opacity = '0';
                     setTimeout(() => { sock.remove(); activeSocks = activeSocks.filter(s => s !== sock); showCodeModal(code, score); }, 500);
                 };
             }
 
-            window.showLeaderboard = () => { document.getElementById('leaderboardModal').classList.remove('hidden'); }
-            window.closeLeaderboard = () => { document.getElementById('leaderboardModal').classList.add('hidden'); }
+            window.showLeaderboard = () => document.getElementById('leaderboardModal').classList.remove('hidden');
+            window.closeLeaderboard = () => document.getElementById('leaderboardModal').classList.add('hidden');
             
-            // 🎁 核心彈窗與複製代碼功能
             function showCodeModal(code, score) {
                 const modal = document.createElement('div');
                 modal.className = 'fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md';
                 modal.innerHTML = `
                     <div class="bg-darker max-w-md w-full rounded-3xl border-2 border-christmas-gold p-8 text-center shadow-2xl animate-shake">
-                        <div class="text-5xl mb-4">🎁</div>
-                        <h3 class="text-2xl font-bold text-white mb-2">找到聖誕襪了！</h3>
-                        <p class="text-green-500 font-bold mb-6">獲得 ${score} 積分</p>
-                        
+                        <div class="text-6xl mb-4">🎁</div>
+                        <h3 class="text-2xl font-bold text-white mb-2">找到代碼了！</h3>
+                        <p class="text-green-500 font-bold mb-8">獲得 ${score} 積分</p>
                         <div class="bg-black/60 p-6 rounded-2xl mb-6 border border-gray-800">
-                            <p class="text-gray-500 text-[10px] uppercase mb-3">您的專屬兌換代碼</p>
-                            <div class="text-2xl font-mono font-bold text-christmas-gold tracking-widest mb-4 allow-select select-all" id="targetCode">${code}</div>
-                            <button id="finalCopyBtn" class="w-full py-2 bg-christmas-gold/10 hover:bg-christmas-gold/20 text-christmas-gold rounded-lg border border-christmas-gold/30 transition text-sm font-bold">
+                            <p class="text-gray-500 text-[10px] uppercase mb-3">代碼 (點擊下方一鍵複製)</p>
+                            <div class="text-2xl font-mono font-bold text-christmas-gold tracking-widest mb-6 allow-select select-all">${code}</div>
+                            <button id="finalCopyBtn" class="w-full py-3 bg-christmas-gold/10 hover:bg-christmas-gold/20 text-christmas-gold rounded-xl border border-christmas-gold/30 transition font-bold text-sm">
                                 <i class="fas fa-copy mr-2"></i> 一鍵複製代碼
                             </button>
                         </div>
-                        
-                        <p class="text-gray-400 text-xs mb-6">請至 Discord 輸入 <code>/聖誕兌換 ${code}</code></p>
                         <button onclick="this.closest('.fixed').remove()" class="w-full py-4 bg-christmas hover:bg-red-700 text-white font-bold rounded-2xl transition shadow-lg">知道了</button>
                     </div>`;
                 document.body.appendChild(modal);
-                
-                // 複製按鈕邏輯
-                const cBtn = modal.querySelector('#finalCopyBtn');
                 const performCopy = () => {
                     navigator.clipboard.writeText(code).then(() => {
+                        const cBtn = modal.querySelector('#finalCopyBtn');
                         cBtn.innerHTML = '<i class="fas fa-check mr-2"></i> 已複製到剪貼簿！';
                         cBtn.classList.replace('text-christmas-gold', 'text-green-500');
-                        cBtn.classList.replace('border-christmas-gold/30', 'border-green-500/30');
                     });
                 };
-                cBtn.onclick = performCopy;
-                performCopy(); // 彈窗出現時自動嘗試複製
+                modal.querySelector('#finalCopyBtn').onclick = performCopy;
+                performCopy();
             }
 
             loadState();
-            setInterval(spawnSock, 10000); // 每 10 秒檢查生成
+            setInterval(spawnSock, 10000);
             setInterval(() => {
                 activeSocks.forEach(s => {
                     s.style.transition = "all 2s ease-in-out";
                     s.style.top = (Math.random()*70+15) + "%";
                     s.style.left = (Math.random()*80+10) + "%";
                 });
-            }, 120000); // 每 2 分鐘自動移動位置
+            }, 180000);
         })();
     </script>
 </body>
