@@ -18,87 +18,62 @@
             --text: #334155;
             --text-light: #64748b;
             --border: #e2e8f0;
+            --exp-border: #fbbf24;
         }
 
         body { 
-            font-family: 'Noto Sans TC', sans-serif; 
-            background: var(--bg); 
-            margin: 0; 
-            padding: 20px 20px 100px 20px;
-            color: var(--text); 
-            line-height: 1.7;
+            font-family: 'Noto Sans TC', sans-serif; background: var(--bg); margin: 0; 
+            padding: 20px 20px 100px 20px; color: var(--text); line-height: 1.7;
         }
         
         .container { max-width: 850px; margin: 0 auto; }
         
         table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin: 20px 0;
-            background: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid var(--border);
+            width: 100%; border-collapse: separate; border-spacing: 0; margin: 20px 0;
+            background: #fff; border-radius: 8px; overflow: hidden; border: 1px solid var(--border);
         }
-        th, td {
-            padding: 12px 15px;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-            border-right: 1px solid var(--border);
-        }
+        th, td { padding: 12px 15px; text-align: center; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); }
         th { background-color: var(--primary-light); color: var(--primary); font-weight: 700; }
         tr:last-child td { border-bottom: none; }
+        td:last-child, th:last-child { border-right: none; }
 
         #start-screen {
-            background: var(--card);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            margin-top: 20px;
-            text-align: center;
+            background: var(--card); padding: 40px; border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center;
         }
-        
-        h1 { color: var(--primary); font-size: 2.2em; margin-bottom: 30px; }
-        
-        .setting-group {
-            margin-bottom: 25px;
-            text-align: left;
-            background: var(--bg);
-            padding: 20px;
-            border-radius: 15px;
-        }
+        h1 { color: var(--primary); font-size: 2em; margin-bottom: 10px; }
+        .subtitle { color: var(--text-light); margin-bottom: 30px; font-size: 0.9em; }
+
+        .setting-group { margin-bottom: 25px; text-align: left; background: var(--bg); padding: 20px; border-radius: 15px; }
         .setting-group h3 { margin: 0 0 15px 0; font-size: 1.1em; color: var(--text); display: flex; align-items: center; }
         .setting-group h3::before { content: ""; display: inline-block; width: 4px; height: 18px; background: var(--primary); margin-right: 10px; border-radius: 2px; }
         
         .radio-options { display: flex; gap: 15px; flex-wrap: wrap; }
-        
-        .option-box { flex: 1; min-width: 150px; position: relative; }
+        .option-box { flex: 1; min-width: 150px; }
         .option-box input[type="radio"] { display: none; }
         .option-box label {
-            display: block; padding: 15px; background: #fff; border: 2px solid var(--border);
+            display: block; padding: 12px; background: #fff; border: 2px solid var(--border);
             border-radius: 12px; cursor: pointer; transition: all 0.2s; text-align: center; font-weight: 700;
         }
         .option-box input:checked + label { border-color: var(--primary); background: var(--primary-light); color: var(--primary); }
 
-        select, .custom-input {
-            appearance: none; padding: 12px 20px; font-size: 16px; border-radius: 12px;
-            border: 2px solid var(--border); width: 100%; box-sizing: border-box; font-family: inherit; margin-top: 10px;
+        select {
+            padding: 12px; font-size: 16px; border-radius: 12px; border: 2px solid var(--border);
+            width: 100%; box-sizing: border-box; font-family: inherit; margin-top: 10px; cursor: pointer;
         }
-        
-        select { background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%234a90e2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") no-repeat right 15px center; }
-        
-        .custom-input-area { display: none; margin-top: 15px; }
-        .custom-input { border-color: var(--primary); outline: none; background: #fff; }
 
-        button.btn-start {
+        .btn-start {
             background: var(--primary); color: white; border: none; padding: 18px 40px;
-            font-size: 1.2em; border-radius: 50px; font-weight: 700; cursor: pointer;
-            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3); transition: transform 0.2s, background 0.2s; margin-top: 20px;
+            font-size: 1.1em; border-radius: 50px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 10px;
         }
-        button.btn-start:hover { transform: translateY(-2px); background: #357abd; }
+        .btn-review {
+            background: #fff; color: var(--error); border: 2px solid var(--error); padding: 15px 40px;
+            font-size: 1.1em; border-radius: 50px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 15px;
+        }
+        .btn-review:disabled { border-color: #ddd; color: #aaa; cursor: not-allowed; }
 
-        /* Question Card */
+        .dynamic-setting { display: none; }
+        .dynamic-setting.active { display: block; }
         .question-card {
             background: var(--card); border-radius: 20px; padding: 30px; margin-bottom: 30px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid var(--border);
@@ -106,25 +81,23 @@
         .question-card.correct { border: 2px solid var(--success); background: var(--success-bg); }
         .question-card.wrong { border: 2px solid var(--error); background: var(--error-bg); }
 
-        .question-meta { font-size: 0.9em; color: var(--primary); font-weight: 700; margin-bottom: 10px; }
-        .question-text { font-size: 1.2em; font-weight: 700; margin-bottom: 25px; white-space: pre-wrap; color: #1e293b; }
-
-        .options-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
-        @media (min-width: 600px) { .options-grid { grid-template-columns: 1fr 1fr; } }
+        .question-text { font-size: 1.15em; font-weight: 700; margin-bottom: 25px; white-space: pre-wrap; }
 
         .option-label {
-            display: flex; align-items: center; padding: 16px; background: #fff; border: 1px solid var(--border);
-            border-radius: 15px; cursor: pointer; transition: all 0.2s;
+            display: flex; align-items: center; padding: 14px; background: #fff;
+            border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: 0.2s; margin-bottom: 10px;
         }
-        .option-label:hover { border-color: var(--primary); background: var(--primary-light); }
         .option-label:has(input:checked) { border-color: var(--primary); background: var(--primary-light); border-width: 2px; }
-
-        /* Feedback & Explanation */
-        .feedback-area { margin-top: 25px; display: none; padding-top: 20px; border-top: 2px dashed var(--border); }
+        .feedback-area { margin-top: 20px; display: none; padding-top: 20px; border-top: 2px dashed var(--border); }
         .explanation-content {
-            display: none; margin-top: 15px; padding: 20px; background: #fffbe6;
-            border-radius: 15px; color: #7c2d12; border-left: 5px solid #fbbf24;
+            display: none; margin-top: 15px; padding: 20px; background: #fff;
+            border-radius: 15px; border: 1px solid #ffe58f; border-left: 6px solid var(--exp-border);
         }
+        .exp-section-title { font-weight: 800; color: #92400e; margin-bottom: 10px; font-size: 1.05em; display: flex; align-items: center; }
+        .exp-correct-box { background: #f0fdf4; padding: 12px; border-radius: 8px; border: 1px solid #dcfce7; margin-bottom: 15px; color: #166534; }
+        .exp-option-list { list-style: none; padding: 0; margin: 0; }
+        .exp-option-item { margin-bottom: 8px; padding-left: 30px; position: relative; font-size: 0.95em; }
+        .exp-option-item b { color: var(--primary); position: absolute; left: 0; }
         
         .exp-btn {
             background: #fff; border: 1px solid var(--primary); color: var(--primary);
@@ -135,18 +108,16 @@
             position: fixed; top: 0; left: 0; width: 100%; background: var(--primary);
             color: white; text-align: center; padding: 12px; font-weight: 700; z-index: 1100; display: none;
         }
-
         .bottom-bar {
-            position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255, 255, 255, 0.9);
-            padding: 15px; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); display: flex; justify-content: center; gap: 20px;
+            position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255, 255, 255, 0.95);
+            padding: 15px; box-shadow: 0 -5px 20px rgba(0,0,0,0.05); display: flex; justify-content: center; gap: 15px;
             z-index: 1000; backdrop-filter: blur(10px);
         }
-        
-        .btn { padding: 12px 30px; border-radius: 12px; cursor: pointer; font-weight: 700; border: none; }
+        .btn { padding: 10px 25px; border-radius: 10px; cursor: pointer; font-weight: 700; border: none; }
         .btn-success { background: var(--success); color: white; }
         .btn-secondary { background: var(--text-light); color: white; }
 
-        #quiz-interface { display: none; margin-top: 40px; padding-bottom: 50px; }
+        #quiz-interface { display: none; margin-top: 40px; }
     </style>
 </head>
 <body>
@@ -161,45 +132,39 @@
             <h3>選擇模式</h3>
             <div class="radio-options">
                 <div class="option-box">
-                    <input type="radio" id="m1" name="mode" value="practice" checked>
-                    <label for="m1">📖 練習模式</label>
+                    <input type="radio" id="m1" name="mode" value="practice" checked onchange="updateUI()">
+                    <label for="m1">📖 練習模式<br><span style="font-size:0.8em; font-weight:normal">選擇區段練習</span></label>
                 </div>
                 <div class="option-box">
-                    <input type="radio" id="m2" name="mode" value="exam">
-                    <label for="m2">📝 測驗模式</label>
+                    <input type="radio" id="m2" name="mode" value="exam" onchange="updateUI()">
+                    <label for="m2">📝 測驗模式<br><span style="font-size:0.8em; font-weight:normal">隨機出題</span></label>
                 </div>
             </div>
         </div>
 
         <div class="setting-group">
-            <h3>題目順序</h3>
-            <div class="radio-options">
-                <div class="option-box">
-                    <input type="radio" id="o1" name="order" value="random" checked>
-                    <label for="o1">🔀 隨機亂數</label>
-                </div>
-                <div class="option-box">
-                    <input type="radio" id="o2" name="order" value="sequential">
-                    <label for="o2">🔢 照題號排</label>
+            <h3 id="setting-title">題目範圍</h3>
+            
+            <div id="practice-settings" class="dynamic-setting active">
+                <select id="rangeSelect">
+                    </select>
+                <div style="margin-top:15px; font-size:0.9em; color:#666;">
+                    <label><input type="checkbox" id="shufflePractice" checked> 該範圍內題序隨機</label>
                 </div>
             </div>
-        </div>
 
-        <div class="setting-group">
-            <h3>題目數量</h3>
-            <select id="questionCount" onchange="toggleCustomInput()">
-                <option value="10">10 題</option>
-                <option value="20">20 題</option>
-                <option value="40">40 題</option>
-                <option value="80" selected>80 題</option>
-                <option value="custom">✏️ 自訂題數...</option>
-            </select>
-            <div id="custom-area" class="custom-input-area">
-                <input type="number" id="customCount" class="custom-input" placeholder="請輸入想要的題數 (最多 80)" min="1" max="80">
+            <div id="exam-settings" class="dynamic-setting">
+                <select id="examCount">
+                    <option value="10">隨機 10 題</option>
+                    <option value="20">隨機 20 題</option>
+                    <option value="40">隨機 40 題</option>
+                    <option value="80">隨機 80 題</option>
+                </select>
             </div>
         </div>
 
         <button class="btn-start" onclick="startQuiz()">🚀 開始</button>
+        <button class="btn-review" id="btnReview" onclick="startReviewMode()" disabled>🎯 錯題重練 (0)</button>
     </div>
 
     <div id="quiz-interface">
@@ -209,7 +174,7 @@
 
 <div class="bottom-bar" id="bottomBar" style="display:none;">
     <button class="btn btn-secondary" onclick="confirmRestart()">🏠 回首頁</button>
-    <button class="btn btn-success" id="submitBtn" onclick="submitQuiz()">✅ 交卷 / 結算</button>
+    <button class="btn btn-success" id="submitBtn" onclick="submitQuiz()">✅ 提交</button>
 </div>
 
 <script>
@@ -782,9 +747,48 @@ const db = [
 let currentQuestions = [];
 let currentMode = 'practice';
 
-function toggleCustomInput() {
-    const select = document.getElementById('questionCount');
-    document.getElementById('custom-area').style.display = (select.value === 'custom' ? 'block' : 'none');
+window.onload = function() {
+    generateRangeOptions();
+    updateReviewButton();
+};
+
+function generateRangeOptions() {
+    const select = document.getElementById('rangeSelect');
+    const total = 80;
+    for (let i = 0; i < total; i += 10) {
+        const opt = document.createElement('option');
+        opt.value = `${i}-${i+10}`;
+        opt.text = `練習第 ${i+1} ~ ${Math.min(i+10, total)} 題`;
+        select.appendChild(opt);
+    }
+}
+
+function updateUI() {
+    const mode = document.querySelector('input[name="mode"]:checked').value;
+    document.getElementById('practice-settings').classList.toggle('active', mode === 'practice');
+    document.getElementById('exam-settings').classList.toggle('active', mode === 'exam');
+}
+
+function updateReviewButton() {
+    const wrongs = JSON.parse(localStorage.getItem('civics_wrong_list') || '[]');
+    const btn = document.getElementById('btnReview');
+    btn.innerText = `🎯 錯題重練 (累積 ${wrongs.length} 題)`;
+    btn.disabled = wrongs.length === 0;
+}
+
+function parseExplanation(text) {
+    if (!text) return { core: "暫無解析", map: {} };
+    let sections = text.split('【選項分析】');
+    let core = sections[0].replace('【正確解析】', '').trim();
+    let optionPart = sections[1] || '';
+    let map = {};
+    let matches = optionPart.match(/\([A-D]\)[^()]*/g) || [];
+    matches.forEach(m => {
+        let label = m.match(/\(([A-D])\)/)[1];
+        let content = m.replace(/\([A-D]\)/, '').trim();
+        map[{"A":0,"B":1,"C":2,"D":3}[label]] = content;
+    });
+    return { core, map };
 }
 
 function shuffleArray(array) {
@@ -797,30 +801,37 @@ function shuffleArray(array) {
 }
 
 function startQuiz() {
-    let count;
-    const select = document.getElementById('questionCount');
-    if (select.value === 'custom') {
-        count = parseInt(document.getElementById('customCount').value);
-        if (isNaN(count) || count < 1) { alert("請輸入有效數字"); return; }
+    currentMode = document.querySelector('input[name="mode"]:checked').value;
+    let pool = [];
+    if (currentMode === 'practice') {
+        const [s, e] = document.getElementById('rangeSelect').value.split('-').map(Number);
+        pool = db.slice(s, e);
+        if (document.getElementById('shufflePractice').checked) pool = shuffleArray(pool);
     } else {
-        count = parseInt(select.value);
+        pool = shuffleArray(db).slice(0, parseInt(document.getElementById('examCount').value));
     }
+    prepareQuestions(pool);
+}
 
-    const modeRadios = document.getElementsByName('mode');
-    for(let r of modeRadios) { if(r.checked) currentMode = r.value; }
-    
-    const order = document.querySelector('input[name="order"]:checked').value;
+function startReviewMode() {
+    currentMode = 'review';
+    const wrongs = JSON.parse(localStorage.getItem('civics_wrong_list') || '[]');
+    prepareQuestions(db.filter(q => wrongs.includes(q.id)));
+}
 
-    let questionPool = JSON.parse(JSON.stringify(db));
-    if(order === 'random') questionPool = shuffleArray(questionPool);
-    
-    currentQuestions = questionPool.slice(0, count);
-    
+function prepareQuestions(pool) {
+    currentQuestions = pool.map(q => {
+        let optionsWithMeta = q.o.map((text, i) => ({ text, origIdx: i }));
+        return { ...q, shuffled: shuffleArray(optionsWithMeta) };
+    });
+    initView();
+}
+
+function initView() {
     document.getElementById('start-screen').style.display = 'none';
     document.getElementById('quiz-interface').style.display = 'block';
     document.getElementById('bottomBar').style.display = 'flex';
     document.getElementById('submitBtn').style.display = (currentMode === 'practice' ? 'none' : 'block');
-    
     renderQuestions();
 }
 
@@ -830,117 +841,104 @@ function renderQuestions() {
     document.getElementById('scoreHeader').style.display = 'none';
 
     currentQuestions.forEach((q, index) => {
-        let shuffledOptions = shuffleArray(q.o);
         const card = document.createElement('div');
         card.className = 'question-card';
         card.id = `card-${index}`;
 
         let optionsHtml = '';
-        shuffledOptions.forEach((opt) => {
+        q.shuffled.forEach((optObj, i) => {
             optionsHtml += `
                 <label class="option-label">
-                    <input type="radio" name="q-${index}" value="${opt}" onchange="checkAnswer(${index}, this)">
-                    <span>${opt}</span>
-                </label>
-            `;
+                    <input type="radio" name="q-${index}" value="${optObj.text}" onchange="handlePractice(${index}, this)">
+                    <span>${optObj.text}</span>
+                </label>`;
         });
+
+        const parsed = parseExplanation(q.e);
+        const labels = ["(A)", "(B)", "(C)", "(D)"];
+        let optionExpHtml = '';
         
-        let tableHtml = q.table ? `<table>${q.table}</table>` : '';
+        q.shuffled.forEach((optObj, i) => {
+            let detail = parsed.map[optObj.origIdx];
+            if (detail) {
+                optionExpHtml += `<li class="exp-option-item"><b>${labels[i]}</b> ${detail}</li>`;
+            }
+        });
 
         card.innerHTML = `
-            <div style="font-size:0.9em; color:var(--primary); font-weight:700; margin-bottom:5px;">第 ${index + 1} 題</div>
+            <div style="font-size:0.8em; color:var(--primary); font-weight:700">QUESTION ${index + 1}</div>
             <div class="question-text">${q.t}</div>
-            ${tableHtml}
+            ${q.table ? `<table>${q.table}</table>` : ''}
             <div class="options-grid">${optionsHtml}</div>
             <div class="feedback-area" id="feedback-${index}">
                 <div class="feedback-text"></div>
                 <button class="exp-btn" onclick="toggleExp(${index})">📖 查看詳解</button>
                 <div class="explanation-content" id="exp-content-${index}">
-                    <strong>💡 解析：</strong><br>${q.e || '無詳解'}
+                    <div class="exp-section-title">💡 核心概念</div>
+                    <div class="exp-correct-box">${parsed.core}</div>
+                    <div class="exp-section-title">🔍 選項辨析</div>
+                    <ul class="exp-option-list">${optionExpHtml}</ul>
                 </div>
-            </div>
-        `;
+            </div>`;
         container.appendChild(card);
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function checkAnswer(index, inputElement) {
+function handlePractice(index, input) {
     if (currentMode !== 'practice') return;
-
     const q = currentQuestions[index];
-    const card = document.getElementById(`card-${index}`);
+    const correctText = q.o[{"A":0,"B":1,"C":2,"D":3}[q.a]];
     const feedbackArea = document.getElementById(`feedback-${index}`);
-    const feedbackText = feedbackArea.querySelector('.feedback-text');
     
-    const map = { "A": 0, "B": 1, "C": 2, "D": 3 };
-    const correctText = q.o[map[q.a]];
-    
-    const isCorrect = (inputElement.value === correctText);
     feedbackArea.style.display = 'block';
-    
-    if (isCorrect) {
-        card.classList.add('correct');
-        feedbackText.style.color = 'var(--success)';
-        feedbackText.innerHTML = `⭕ 答對了！`;
+    if (input.value === correctText) {
+        document.getElementById(`card-${index}`).classList.add('correct');
+        feedbackArea.querySelector('.feedback-text').innerHTML = "<span style='color:var(--success)'>⭕ 答對了！</span>";
     } else {
-        card.classList.add('wrong');
-        feedbackText.style.color = 'var(--error)';
-        feedbackText.innerHTML = `❌ 答錯了。正確答案：${correctText}`;
+        document.getElementById(`card-${index}`).classList.add('wrong');
+        feedbackArea.querySelector('.feedback-text').innerHTML = `<span style='color:var(--error)'>❌ 答錯了！正確答案：${correctText}</span>`;
     }
-    
-    // 鎖定該題
-    document.querySelectorAll(`input[name="q-${index}"]`).forEach(inp => inp.disabled = true);
+    document.querySelectorAll(`input[name="q-${index}"]`).forEach(i => i.disabled = true);
     document.getElementById(`exp-content-${index}`).style.display = 'block';
 }
 
 function toggleExp(index) {
     const el = document.getElementById(`exp-content-${index}`);
-    el.style.display = (el.style.display === "block" ? "none" : "block");
-}
-
-function confirmRestart() {
-    if(confirm("確定要回首頁嗎？目前的進度將會消失。")) location.reload();
+    el.style.display = el.style.display === "block" ? "none" : "block";
 }
 
 function submitQuiz() {
     if(!confirm("確定要交卷嗎？")) return;
-
     let score = 0;
-    currentQuestions.forEach((q, index) => {
-        const card = document.getElementById(`card-${index}`);
-        const feedbackArea = document.getElementById(`feedback-${index}`);
-        const feedbackText = feedbackArea.querySelector('.feedback-text');
-        const map = { "A": 0, "B": 1, "C": 2, "D": 3 };
-        const correctText = q.o[map[q.a]];
-        const selected = document.querySelector(`input[name="q-${index}"]:checked`);
-        
-        card.classList.remove('correct', 'wrong');
-        feedbackArea.style.display = 'block';
+    let wrongs = new Set(JSON.parse(localStorage.getItem('civics_wrong_list') || '[]'));
 
-        if (selected) {
-            if (selected.value === correctText) {
-                score++; card.classList.add('correct');
-                feedbackText.style.color = 'var(--success)';
-                feedbackText.innerHTML = `⭕ 答對了！`;
-            } else {
-                card.classList.add('wrong');
-                feedbackText.style.color = 'var(--error)';
-                feedbackText.innerHTML = `❌ 答錯了。正確答案：${correctText}`;
-            }
+    currentQuestions.forEach((q, index) => {
+        const correctText = q.o[{"A":0,"B":1,"C":2,"D":3}[q.a]];
+        const selected = document.querySelector(`input[name="q-${index}"]:checked`);
+        const feedbackArea = document.getElementById(`feedback-${index}`);
+        
+        feedbackArea.style.display = 'block';
+        if (selected && selected.value === correctText) {
+            score++; 
+            document.getElementById(`card-${index}`).classList.add('correct');
+            feedbackArea.querySelector('.feedback-text').innerHTML = "⭕ 答對了！";
+            if(currentMode === 'review') wrongs.delete(q.id);
         } else {
-            card.classList.add('wrong');
-            feedbackText.style.color = 'var(--error)';
-            feedbackText.innerHTML = `⚠️ 未作答。正確答案：${correctText}`;
+            document.getElementById(`card-${index}`).classList.add('wrong');
+            feedbackArea.querySelector('.feedback-text').innerHTML = `❌ 正確答案：${correctText}`;
+            if(currentMode === 'exam') wrongs.add(q.id);
         }
-        document.querySelectorAll(`input[name="q-${index}"]`).forEach(inp => inp.disabled = true);
+        document.querySelectorAll(`input[name="q-${index}"]`).forEach(i => i.disabled = true);
     });
 
-    const header = document.getElementById('scoreHeader');
-    header.innerHTML = `得分：${score} / ${currentQuestions.length} (正確率：${Math.round((score/currentQuestions.length)*100)}%)`;
-    header.style.display = 'block';
+    localStorage.setItem('civics_wrong_list', JSON.stringify(Array.from(wrongs)));
+    document.getElementById('scoreHeader').innerHTML = `得分：${score} / ${currentQuestions.length}`;
+    document.getElementById('scoreHeader').style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+function confirmRestart() { if(confirm("確定回首頁？")) location.reload(); }
 </script>
 </body>
 </html>
