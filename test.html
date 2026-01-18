@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>第三次段考公民題庫</title>
+    <style>
+        :root {
+            --primary: #4a90e2;
+            --success: #2ecc71;
+            --error: #e74c3c;
+            --bg: #f5f7fa;
+            --card: #ffffff;
+            --text: #2c3e50;
+        }
+
+        body { 
+            font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif; 
+            background: var(--bg); 
+            margin: 0; 
+            padding: 20px 20px 100px 20px; /* 底部留白給固定按鈕 */
+            color: var(--text); 
+            line-height: 1.6;
+        }
+        
+        .container { max-width: 800px; margin: 0 auto; }
+        
+        /* Start Screen */
+        #start-screen {
+            background: var(--card);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 50px;
+        }
+        
+        select, button {
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin: 10px;
+        }
+        
+        /* Fixed Bottom Bar */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+
+        .btn-primary { background: var(--primary); color: white; border: none; font-weight: bold; cursor: pointer; }
+        .btn-success { background: var(--success); color: white; border: none; font-weight: bold; cursor: pointer; }
+        .btn-secondary { background: #95a5a6; color: white; border: none; font-weight: bold; cursor: pointer; }
+        
+        button:disabled { background: #ccc; cursor: not-allowed; opacity: 0.7; }
+
+        /* Question Card */
+        .question-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 6px solid transparent;
+            transition: transform 0.2s;
+        }
+
+        .question-card.correct { border-left-color: var(--success); background: #f6fffa; }
+        .question-card.wrong { border-left-color: var(--error); background: #fff5f5; }
+
+        .question-text { font-size: 1.15em; font-weight: 700; margin-bottom: 15px; white-space: pre-line; }
+
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        @media (min-width: 600px) { .options-grid { grid-template-columns: 1fr 1fr; } }
+
+        .option-label {
+            display: flex; align-items: center; padding: 12px;
+            border: 2px solid #eee; border-radius: 8px; cursor: pointer;
+            transition: 0.2s;
+        }
+        .option-label:hover { background: #f8f9fa; border-color: #ddd; }
+        
+        /* Radio Checked Style */
+        input[type="radio"]:checked + span { font-weight: bold; color: var(--primary); }
+        .option-label:has(input:checked) { border-color: var(--primary); background: #f0f7ff; }
+
+        input[type="radio"] { margin-right: 12px; transform: scale(1.2); cursor: pointer; }
+        input[type="radio"]:disabled { cursor: not-allowed; }
+
+        /* Feedback & Explanation */
+        .feedback-area { margin-top: 15px; display: none; padding-top: 15px; border-top: 1px solid #eee; }
+        .feedback-text { font-weight: bold; margin-bottom: 10px; font-size: 1.1em; }
+        
+        .exp-btn {
+            background: #fff; border: 1px solid var(--primary); color: var(--primary);
+            padding: 8px 16px; font-size: 14px; margin: 0;
+        }
+        .exp-btn:hover { background: var(--primary); color: white; }
+
+        .explanation-content {
+            display: none;
+            margin-top: 10px;
+            padding: 15px;
+            background: #fffbe6; /* 黃色底 */
+            border-radius: 8px;
+            color: #5c4b00;
+            font-size: 0.95em;
+            line-height: 1.7;
+        }
+
+        .score-display {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: var(--primary); color: white;
+            text-align: center; padding: 10px; font-weight: bold; font-size: 1.2em;
+            z-index: 900; display: none; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* 隱藏未開始時的介面 */
+        #quiz-interface { display: none; }
+
+    </style>
+</head>
+<body>
+
+<div class="score-display" id="scoreHeader"></div>
+
+<div class="container">
+    
+    <div id="start-screen">
+        <h1 style="color:var(--primary)">公民刷題系統 <span style="font-size:0.5em; color:#666">v2.0</span></h1>
+        <p>請先選擇題目數量再按開始</p>
+        <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
+        
+        <label for="questionCount" style="font-weight:bold;">選擇題目數量：</label>
+        <select id="questionCount">
+            <option value="10">10 題 (快速)</option>
+            <option value="20">20 題 (標準)</option>
+            <option value="40">40 題 (挑戰)</option>
+            <option value="80">80 題 (全卷)</option>
+        </select>
+        <br><br>
+        <button class="btn-primary" onclick="startQuiz()">🚀 開始測驗</button>
+    </div>
+
+    <div id="quiz-interface">
+        <div id="quiz-container"></div>
+    </div>
+
+</div>
+
+<div class="bottom-bar" id="bottomBar" style="display:none;">
+    <button class="btn-secondary" onclick="confirmRestart()">🏠 回首頁</button>
+    <button class="btn-success" id="submitBtn" onclick="submitQuiz()">✅ 交卷對答案</button>
+</div>
+
+<script>
+    // 完整題庫 (含詳解)
+    // 透過關鍵字自動對應詳解邏輯，或是針對特定困難題型手動編寫
+    const allQuestions = [
+        {id:1, a:"A", t:"電影《返校》中國民黨政府以防止共產主義滲透等理由頒布《戒嚴令》，組織地下讀書會甚至可能構成「叛亂罪」。依據上述訊息判斷，《戒嚴令》限制了張明暉等人的何種公民權利？", o:["自由權", "文化權", "政治權", "社會權"], e:"「自由權」包含人身、言論、講學、著作及出版自由。禁止讀書會、限制閱讀禁書，主要侵害了人民的言論與思想自由。"},
+        {id:2, a:"B", t:"下列關於當代普世人權的敘述，何者正確？", o:["因符合各國法定資格者而擁有的權利", "人人皆應同等享有而非侷限國內層次", "國際社會對普世人權的推動已臻完備", "仰賴聯合國簽訂人權公約以落實保障"], e:"普世人權強調「天賦人權」，不分國籍、種族皆應享有，超越國內法層次。(C)尚未完備 (D)不只仰賴聯合國，各國亦需努力。"},
+        {id:3, a:"D", t:"我國《勞動基準法》規定工資不得低於法定基本工資，保障勞工享有基本生活。其所欲保障的公民權利範疇，與下列何者相同？", o:["《政黨法》規定國民得依其意願加入或退出政黨", "立法院公投年齡降至十八歲以提升青年公共參與", "自111學年度起將本土語言列入中小學必修課程", "政府提供受新冠疫情影響的產業或民眾紓困補助"], e:"題幹為「社會權」（生存權、工作權）。(A)結社自由（自由權/參政權）(B)參政權 (C)文化權 (D)紓困補助是為了保障人民生存，屬「社會權」。"},
+        {id:4, a:"B", t:"《公民投票法》的實施，主要是落實我國人民下列哪一項公民權利？", o:["自由權", "參政權", "社會權", "多元文化權"], e:"公民投票是人民直接參與公共事務決策的權利，屬於「參政權」中的創制、複決權。"},
+        {id:5, a:"A", t:"瑞士通過「婚姻平權」公投，使同性伴侶可登記結婚。此活動落實了哪些權利？\n(甲)自由權 (乙)參政權 (丙)社會權 (丁)多元文化權", o:["甲乙", "乙丙", "丙丁", "甲丙"], e:"結婚屬於個人選擇伴侶的自由（自由權）；透過公投決定政策則是行使公民權利（參政權）。"},
+        {id:6, a:"C", t:"關於雅典式民主的描述，何者正確？", o:["主要受到天賦人權學說影響而開展", "人民都能直接參與並決定公共事務", "公民身分與權利是某部分人的特權", "公民身分與權利內涵發展已臻完善"], e:"雅典民主限制嚴格，僅限「成年男性公民」，婦女、奴隸、外邦人皆無公民權，故為「特權」。"},
+        {id:7, a:"A", t:"英國教師、公務員罷工爭取薪資報酬。此權利發展面向近似於？", o:["因應人口高齡化要求政府健全長照", "爭取18歲投票權", "維護狩獵傳統", "呼籲安樂死合法化"], e:"罷工爭取的是勞動權益與生存條件，屬於「社會權」。(A)長照亦屬社會權 (B)參政權 (C)文化權 (D)自由權(身體自主)。"},
+        {id:8, a:"B", t:"居民抗議光電廠開發案恐破壞環境。挺身抗議是《憲法》保障的何種基本人權？", o:["平等權", "自由權", "財產權", "訴願權"], e:"集會、遊行、抗議屬於表現自由，是《憲法》保障的「自由權」。(雖涉及環境議題，但抗議行為本身是行使自由權)"},
+        {id:9, a:"C", t:"美國「祖父條款」規定若祖父有投票權則後代可免試，變相排除黑人。這侵害了何項權利？", o:["自由權", "財產權", "平等權", "生存權"], e:"「祖父條款」對不同種族設定不同門檻，造成不合理的差別待遇，嚴重違反「平等權」。"},
+        {id:10, a:"C", t:"下列哪項政策符合羅爾斯(Rawls)正義論的「差異原則」？", o:["高乘載管制", "機場宣導防拐賣", "提供身障人士子女學費減免", "推動十二年國教"], e:"差異原則主張社會經濟的不平等分配，必須對「最不利者」（弱勢群體）最有利。補助身障者符合此原則。"},
+        {id:11, a:"D", t:"福利國家透過措施照顧人民生活。下列何者最符合其概念？", o:["降低選舉權年齡", "提高免稅額", "尊重市場自由", "擴大施打公費疫苗"], e:"福利國家強調政府積極介入以保障人民福祉。(D)公費疫苗是國家積極照顧人民健康的表現，屬社會權範疇。"},
+        {id:12, a:"C", t:"政府研訂「0-6歲國家養」政策。主要涉及的權利內涵為何？", o:["自由權", "參政權", "社會權", "文化權"], e:"育兒補助、國家養育屬於社會福利政策，旨在保障家庭與兒童的生存發展，為「社會權」。"},
+        {id:13, a:"A", t:"兩公約及其施行法所具備的意義為何？\n(甲)個人有權對抗國家的不合理干預\n(乙)人民有權向國家爭取經濟社會保障", o:["甲乙", "乙丙", "丙丁", "丁戊"], e:"(甲)對應《公政公約》（消極人權）；(乙)對應《經社文公約》（積極人權）。"},
+        {id:14, a:"B", t:"下列哪些符合羅爾斯正義論二原則？\n(乙)個人與群體應擁有同等機會享有「自由平等」\n(丙)資源分配要以「最不利者」優先", o:["甲乙", "乙丙", "丙丁", "甲丁"], e:"羅爾斯主張：第一原則「自由原則」（乙）；第二原則「差異原則」（丙）。(甲)那是效益主義。"},
+        {id:15, a:"B", t:"小明想當「正義使者」。下列政見何者正確？", o:["分配正義：學生參與校規", "匡正正義：預防輔導霸凌", "程序正義：架設投影設備", "實質平等：權利義務皆相等"], e:"匡正正義（矯正正義）指對錯誤或侵害的糾正與補償，霸凌防治屬之。(A)是程序正義 (D)實質平等允許合理差別待遇。"},
+        {id:16, a:"C", t:"古希臘雅典民主是直接民主起源，何者正確？", o:["受天賦人權影響", "全民直接參與", "公民身分是特權", "發展已臻完善"], e:"雅典民主具有排他性，僅少數成年男性擁有公民權，故為特權。"},
+        {id:17, a:"A", t:"2023英國罷工爭取薪資。近似於？", o:["要求政府健全長照", "爭取18歲投票", "鬆綁狩獵法規", "安樂死合法化"], e:"罷工爭取經濟權益屬「社會權」，長照亦屬社會權。(B)參政 (C)文化 (D)自由。"},
+        {id:18, a:"B", t:"反對光電廠抗議。屬何種權利？", o:["平等權", "自由權", "財產權", "訴願權"], e:"抗議是集會結社與言論自由的表現，屬「自由權」。"},
+        {id:19, a:"C", t:"祖父條款影響參政權外，還嚴重影響？", o:["自由權", "財產權", "平等權", "生存權"], e:"因血統/祖先身分而有差別待遇，違反「平等權」。"},
+        {id:20, a:"C", t:"符合羅爾斯「差異原則」的是？", o:["高乘載", "宣導防詐", "身障子女學費減免", "十二年國教"], e:"差異原則需優先照顧弱勢（最不利者）。身障者屬社會弱勢。"},
+        {id:21, a:"B", t:"抵制卡達世足賽以抗議勞工權益受損。勞工權益屬於？", o:["自由權", "社會權", "參政權", "平等權"], e:"勞動權益（工作條件、薪資福利）屬於「社會權」。"},
+        {id:22, a:"D", t:"《消除對婦女一切形式歧視公約》精神？", o:["男主持主導", "班長派男生", "媽媽做家事", "男女廁比例不低於1:5"], e:"(D)考量生理差異給予女性更多廁所空間，是「實質平等」的展現，符合公約消除歧視、保障婦女權益的精神。"},
+        {id:23, a:"D", t:"設置「臺語專屬頻道」涉及何種權利？", o:["自由權", "參政權", "社會權", "文化權"], e:"語言是文化載體，保障特定語言的傳播權屬於「文化權」。"},
+        {id:24, a:"D", t:"何者不是聯合國人權組織？", o:["人權理事會", "人權公約機構", "人權事務高級專員", "自由之家"], e:"「自由之家」(Freedom House) 是美國的非政府組織(NGO)，非聯合國機構。"},
+        {id:25, a:"D", t:"關於《世界人權宣言》何者正確？", o:["具有強制性", "我國不必遵守", "已脫軌", "與兩公約合稱國際人權法典"], e:"《世界人權宣言》本身無法律強制力，但具有道德約束力與習慣法地位，與兩公約合稱「國際人權法典」。"},
+        {id:26, a:"D", t:"何者「不是」保護移工的法令或政策？", o:["勞基法", "健保法", "開齋節空間", "強迫吃豬肉均衡營養"], e:"(D)強迫吃豬肉違反伊斯蘭教義，嚴重侵害宗教自由與多元文化權。"},
+        {id:27, a:"A", t:"公園設施更新邀請兒童表意。落實哪個公約？", o:["兒童權利公約", "公政公約", "經社文公約", "移工公約"], e:"《兒童權利公約》強調兒童有「表意權」，參與影響自身的事務。"},
+        {id:28, a:"C", t:"不分區立委由女性遞補（婦女保障名額）。合乎？", o:["公政公約", "經社文公約", "消除婦女歧視公約", "消除種族歧視公約"], e:"婦女保障名額旨在矯正性別在參政上的實質不平等，符合CEDAW（消除對婦女一切形式歧視公約）。"},
+        {id:29, a:"C", t:"「凡未廢除死刑之國家...不得科處死刑」。出自？", o:["法國人權宣言", "美國獨立宣言", "公民與政治權利國際公約", "經濟社會文化權利國際公約"], e:"死刑限制條款主要見於《公民與政治權利國際公約》(ICCPR)。"},
+        {id:30, a:"C", t:"臺灣人權表現何者正確？", o:["簽署無效", "簽署即完成程序", "通過施行法建立報告制度", "1990開始"], e:"我國雖非聯合國會員，但通過「施行法」將公約國內法化，並建立國家人權報告制度。"},
+        {id:31, a:"C", t:"屬於保障「一般群體」的國際人權公約？", o:["消除婦女歧視公約", "兒童權利公約", "經濟社會文化權利國際公約", "身心障礙者權利公約"], e:"(A)(B)(D)皆為針對特定弱勢群體的公約；(C)經社文公約適用於所有人（一般群體）。"},
+        {id:32, a:"C", t:"從「有限人權」邁向「普遍人權」始於？", o:["美國獨立宣言", "公政公約", "世界人權宣言", "經社文公約"], e:"1948年《世界人權宣言》是第一份全球性的人權文件，確立人權的普世性。"},
+        {id:33, a:"D", t:"何者「不是」我國遵守人權公約的理由？", o:["人權是普世價值", "國家有義務捍衛", "落實憲法保障", "提升經濟地位帶來財富"], e:"遵守人權公約是為了保障人性尊嚴與權利，而非為了經濟利益。"},
+        {id:34, a:"C", t:"何者「不是」國際非政府人權組織(INGO)？", o:["國際人權聯合會", "無國界醫生", "人權理事會", "國際特赦組織"], e:"「人權理事會」是聯合國下轄的政府間機構(IGO)，非NGO。"},
+        {id:35, a:"C", t:"桃園市明訂原住民有漁獵採集權。意義為？", o:["環境權還國民", "限縮文化權", "兼顧文化保存及行為合法化", "加強環境認識"], e:"將原住民傳統習俗入法，是為了在現代法律體系中保障其文化權，使其合法化。"},
+        {id:36, a:"D", t:"加洛瓦族被當動物園參觀、染病。面臨困境？", o:["遊客影響自由權", "工作權受影響", "疾病威脅環境權", "迫使改變傳統生活，侵害文化權"], e:"外力介入導致原始部落生活方式崩解，主要侵害其「文化權」與自決權。"},
+        {id:37, a:"D", t:"何者與「推廣母語」同為實踐多元文化權？", o:["強迫學閩南語", "要求新移民讀夜校", "避免推廣飲食", "社區營造融入在地生活"], e:"(D)社區總體營造強調在地文化認同與生活結合，展現多元文化價值。"},
+        {id:38, a:"B", t:"《美國獨立宣言》「人生而平等」當時不包括？\n(甲)男人 (乙)女人 (丙)黑人 (丁)白人", o:["甲乙", "乙丙", "丙丁", "甲丁"], e:"當時的平等主要指「白人男性」，排除了女人(乙)與黑人(丙)。"},
+        {id:39, a:"C", t:"新北市增設新住民服務中心。是以何者為主體的保障？", o:["國家", "個人", "族群", "法人"], e:"新住民屬於特定「族群」，政策旨在保障該群體的權益。"},
+        {id:40, a:"C", t:"北歐福利國家從出生照顧到死亡。保障何種權利？", o:["文化權", "自由權", "社會權", "民族自決權"], e:"福利國家的核心在於落實「社會權」，確保人民享有基本生活水準。"},
+        {id:41, a:"D", t:"我國移工尚無法享有哪項權利？", o:["人身自由權", "多元文化權", "宗教自由權", "參政權"], e:"參政權（選舉、罷免等）通常限於具本國國籍之公民，移工無此權利。"},
+        {id:42, a:"A", t:"何者「並未」落實兩性實質平等？", o:["玻璃天花板", "婦女保障名額", "夜間婦女候車區", "同工同酬"], e:"「玻璃天花板」指女性升遷遇到的無形障礙，是性別歧視的現象，非落實平等的措施。"},
+        {id:43, a:"C", t:"形式平等 vs 實質平等，何者正確？", o:["形式=齊頭", "實質=立足點", "形式=一視同仁；實質=考量差異", "身障用輔具=形式"], e:"形式平等強調法律前人人平等（一視同仁）；實質平等強調考量先天後天差異給予合理差別待遇（如身障輔具）。"},
+        {id:44, a:"D", t:"羅爾斯「正義論」觀點，何者符合「公益」？", o:["核廢料放離島", "不提供資源給弱勢", "正效益多過負效益", "考量整體利益應重視個人平等與弱勢權益"], e:"羅爾斯反對效益主義（犧牲少數成就多數），主張正義應優先保障基本自由與弱勢者權益。"},
+        {id:45, a:"C", t:"身權法規定機關需進用身障者。說明何者正確？", o:["落實形式平等", "違反平等權", "符合差異原則", "特權規定"], e:"定額進用身障者是對弱勢的優惠性差別待遇，符合羅爾斯正義論的「差異原則」。"},
+        {id:46, a:"D", t:"將弱勢者劃為奴僕服務他人。羅爾斯會主張？", o:["符合公益", "可強迫工作", "犧牲少數必須", "國家應提供資源協助以免其無奈接受奴僕工作"], e:"羅爾斯主張每個人都有不可侵犯的基本自由，且應照顧最弱勢者，反對奴役或剝削。"},
+        {id:47, a:"A", t:"有關「公平正義」敘述何者「不正確」？", o:["具有客觀合理的標準", "平等參與機會", "合理資源分配", "平等權利是基礎"], e:"公平正義的標準往往隨時代、文化而異，具主觀性與多元性，並無絕對單一的「客觀標準」。"},
+        {id:48, a:"C", t:"考績處分應經公正委員會、給予申辯機會。這是？", o:["分配正義", "匡正正義", "程序正義", "平等原則"], e:"強調決策過程的公開、透明、聽證、申訴機會，屬於「程序正義」。"},
+        {id:49, a:"C", t:"工業量產致傳統技藝失傳，羅爾斯主張？", o:["追求物質享受", "保留技藝是私益", "政府應考慮少數靠傳統技藝維生的弱勢權益", "追求公益優先"], e:"基於差異原則，政府應關注受社會變遷影響的弱勢群體（傳統技藝者）。"},
+        {id:50, a:"B", t:"補助工會辦勞動教育。目標？", o:["公權力介入", "推動自主性勞動關係，提升工會談判力", "深化個別意識", "解除契約限制"], e:"強化工會能力有助於勞資對等談判，促進集體勞動關係的發展。"},
+        {id:51, a:"B", t:"原住民族傳統智慧視同集體創作。原因？", o:["法人地位", "原民文化採集體生活方式", "創作屬私有", "人口少"], e:"原住民族文化特性強調「共享」與「集體性」，與主流社會強調個人著作權不同，故需特別立法保障。"},
+        {id:52, a:"A", t:"禁師生戀修法。甲：落實法律保留；乙：違反比例原則。主張為？", o:["甲落實法律保留，乙疑義比例原則", "甲落實平等，乙疑義法律保留", "甲落實平等，乙疑義比例", "甲落實法律保留，乙疑義明確性"], e:"甲認為限制權利需有法律依據（法律保留）；乙認為全面禁止可能手段過當（比例原則）。"},
+        {id:53, a:"B", t:"釋字792認為販毒限於「既遂」，擴張解釋侵害人權。違反？", o:["比例原則", "明確性原則", "習慣法禁止", "法律保留"], e:"刑法解釋需嚴格，擴張解釋導致人民無法預見法律後果，違反「法律明確性原則」及罪刑法定主義。"},
+        {id:54, a:"C", t:"打工薪資低於勞基法。正確敘述？", o:["學生不保障", "自認倒楣", "可向勞工局申訴", "老闆無處分"], e:"勞基法適用於所有受僱勞工，包含工讀生。薪資低於基本工資違法，可申訴。"},
+        {id:55, a:"D", t:"工會與資方達成團體協約。說明？", o:["依照勞基法", "行使爭議權", "津貼屬集體權", "透過對話建立和諧關係是自主性勞動關係發展"], e:"團體協約是勞資雙方協商結果，展現了「勞資自治」與自主性勞動關係。(B)爭議權是罷工等對抗行為。"},
+        {id:56, a:"D", t:"勞動參與率敘述，何者正確？", o:["都會區較低", "人口越多越高", "中高齡較高", "年輕、體能好、生產力高者勞參率較高"], e:"勞參率與經濟發展、人口結構有關。通常青壯年（生產力高）參與率較高。"},
+        {id:57, a:"A", t:"憲法審查敘述，何者正確？", o:["排除「惡法亦法」的重要機制", "公民隨時可聲請", "無法給修正方向", "無須暫停審理"], e:"憲法審查（違憲審查）可宣告法律無效，避免惡法侵害人權。(B)需用盡訴訟途徑 (D)法官需暫停審理聲請釋憲。"},
+        {id:58, a:"A", t:"視障按摩違憲後，政府規定視障者有場地優惠。符合？", o:["兼顧職業自由與弱勢保障", "擴大公益限縮自由", "擴大社會權", "個別補償"], e:"大法官雖開放按摩業（保障工作權自由），但政府仍透過優惠措施保障視障弱勢（實質平等）。"},
+        {id:59, a:"B", t:"《傳染病防治法》授權中央公告疫苗措施。不包含何原則？", o:["法律保留", "程序從新", "比例", "平等"], e:"(B)「程序從新」是法律適用原則，與題幹描述的行政授權與防疫措施關聯較低。題幹涉及授權（法律保留）、管制程度（比例）、補助對象（平等）。"},
+        {id:60, a:"C", t:"國家限制人權應符合哪些要件？", o:["比例、平等、公益", "比例、平等、法律保留", "比例原則、法律保留原則、符合公共利益", "比例、差別待遇、公益"], e:"依據憲法第23條，限制基本權需符合：公益目的、法律保留（以法律定之）、比例原則（必要性）。"},
+        {id:61, a:"A", t:"關於平等權敘述何者正確？", o:["追求實質平等", "受刑人可選總統", "設立國定宗教", "特殊考生不得延長時間"], e:"現代法治國家追求「實質平等」，允許合理差別待遇。(B)褫奪公權者不可 (C)政教分離 (D)給予身障生延長時間才符合實質平等。"},
+        {id:62, a:"B", t:"何者「不符合」平等原則？", o:["男子服役", "生育補助排除未婚媽媽", "災後依受損給救助", "設無障礙設施"], e:"(B)未婚媽媽與婚生子女之母同樣承擔育兒責任，僅因婚姻狀態排除補助，缺乏合理關聯，違反平等原則。"},
+        {id:63, a:"B", t:"員工私下分享客戶私密影像。侵犯？", o:["受益權", "隱私權", "姓名權", "人身自由"], e:"私密影像、居家空間屬於個人「隱私權」保障範疇。"},
+        {id:64, a:"B", t:"屬於「集體勞動法」範疇？\n(甲)勞基法 (乙)工會法 (丙)團體協約法 (丁)勞動合同法 (戊)勞資爭議處理法", o:["甲丙丁", "乙丙戊", "甲丙戊", "丙丁戊"], e:"集體勞動法「勞動三法」：工會法（團結權）、團體協約法（協商權）、勞資爭議處理法（爭議權）。(甲)勞基法是個別勞動法。"},
+        {id:65, a:"D", t:"勞工組織工會爭取權利，為落實？", o:["罷工權", "加班費", "教師工會", "憲法賦予之工作權(勞動三權)"], e:"組織工會屬於「結社自由」與「勞動三權」（團結權），旨在保障勞工權益與工作權。"},
+        {id:66, a:"D", t:"「母親」工作無薪且全年無休。推論？", o:["計入GDP", "限女性", "無法替代", "有助於再生產勞動"], e:"家務勞動屬於「再生產勞動」（恢復勞動力、培育下一代），雖無薪資且未計入GDP，但對經濟運作至關重要。"},
+        {id:67, a:"B", t:"再生產勞動對市場經濟貢獻之例證？", o:["家庭代工", "家務勞動者採買活絡市場", "補衣種菜", "具市場價值"], e:"家務勞動者（如家庭主婦）的採買消費行為，直接促進了市場交易與經濟活絡。"},
+        {id:68, a:"D", t:"國家保障勞動權益原因，與何者「無關」？", o:["強化稅基", "保障經濟安全", "加強國家認同", "個人自我實現"], e:"(C)與加強國家認同較無直接關聯。保障勞動權益主要是為了經濟安全、社會穩定與個人尊嚴。"},
+        {id:69, a:"A", t:"聯合國「世界母語日」目的？", o:["文化權", "自由權", "社會權", "民族自決"], e:"語言是文化核心，推廣母語旨在保障各族群的「文化權」。"},
+        {id:70, a:"C", t:"選舉日上班給加班費。保障哪種人權？", o:["自由權", "參政權", "社會權", "文化權"], e:"雖然目的是為了讓勞工去投票（參政），但「加班費」本身是勞動權益的保障，屬於「社會權」。(註：此題若解釋為保障投票機會則偏參政，但題幹強調加班費與勞工權益)"},
+        {id:71, a:"B", t:"裁併校公聽會，保障學生受教權。受教權屬於？", o:["自由權", "社會權", "參政權", "文化權"], e:"受教權強調國家應積極提供教育資源，屬於「社會權」。"},
+        {id:72, a:"A", t:"法國將「墮胎權」入憲。落實何種權利？", o:["自由權", "參政權", "社會權", "文化權"], e:"墮胎權涉及女性對自身身體的支配與選擇，屬於「身體自主權」與隱私，歸類為「自由權」。"},
+        {id:73, a:"B", t:"瑞士公投通過提高養老金。反映權利關係？", o:["以自由權影響社會權", "藉參政權促成社會權", "以自由權影響文化權", "藉參政權促成文化權"], e:"公投是「參政權」的行使；養老金是「社會權」的保障。透過公投落實福利。"},
+        {id:74, a:"B", t:"原住民歲時祭儀放假。立法用意近似？", o:["父母約定姓氏", "將臺灣手語納入國家語言", "新住民參選限制", "外國人不得任股東"], e:"兩者皆為保障特定文化群體（原住民、聽障者/手語使用者）的權益與文化傳承。"},
+        {id:75, a:"D", t:"《最低工資法》保障權利屬性與何者相似？", o:["公投年齡", "保障獵槍", "徵收房產稅", "消防員組工會權利"], e:"最低工資與組工會皆屬「勞動權益」，歸類為「社會權」。(A)參政 (B)文化 (C)財產義務。"},
+        {id:76, a:"D", t:"原民團體抗議獵槍辦法是文化滅絕。涉及權利關係？", o:["藉社會權促成文化權", "藉參政權促成社會權", "以積極權利影響集體", "以消極權利影響集體權利的實現"], e:"抗議（表現自由/消極權利/自由權）是手段，目的是維護狩獵文化（集體權利/文化權）。"},
+        {id:77, a:"C", t:"我國兩公約審查可能發生之情況？", o:["人權會建議", "政府提平行報告", "政府回應國際專家疑問", "回應結論性意見"], e:"國際審查模式中，政府官員需當場回應國際審查委員（專家）的提問。(B)平行報告是NGO提的。"},
+        {id:78, a:"D", t:"移工政治權利辯論。正方(支持)論點？", o:["全民公投", "集會遊行", "本質不同", "若不具參政權，勞動剝削問題易被排除在討論外"], e:"正方主張給予參政權，理由通常是「沒有選票就沒有話語權」，導致權益被忽視。"},
+        {id:79, a:"A", t:"本土語言列部定必修。目的？", o:["尊重多元文化並傳承", "在家學習", "平等受教", "提升競爭力"], e:"教育部的目的是落實《國家語言發展法》，保存並傳承面臨危機的本土語言（文化權）。"},
+        {id:80, a:"B", t:"難民法議題，正方(支持)論點？", o:["個案協助", "通過難民法才能系統性提供支持", "無法應對大量", "涉及主權爭議"], e:"正方認為現行個案處理缺乏制度保障，應立法建立SOP以系統性保障人權。"}
+    ];
+
+    let currentQuestions = [];
+    let userSelectedCount = 0;
+
+    // 洗牌算法
+    function shuffleArray(array) {
+        let newArray = JSON.parse(JSON.stringify(array));
+        for (let i = newArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
+    }
+
+    // 開始測驗
+    function startQuiz() {
+        const countInput = document.getElementById('questionCount').value;
+        userSelectedCount = parseInt(countInput);
+        
+        document.getElementById('start-screen').style.display = 'none';
+        document.getElementById('quiz-interface').style.display = 'block';
+        document.getElementById('bottomBar').style.display = 'flex';
+        
+        const container = document.getElementById('quiz-container');
+        container.innerHTML = '';
+        document.getElementById('scoreHeader').style.display = 'none';
+
+        // 隨機選題
+        let shuffledAll = shuffleArray(allQuestions);
+        currentQuestions = shuffledAll.slice(0, userSelectedCount);
+
+        // 產生題目卡片
+        currentQuestions.forEach((q, index) => {
+            let shuffledOptions = shuffleArray(q.o);
+            
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `card-${index}`;
+
+            let optionsHtml = '';
+            shuffledOptions.forEach((opt) => {
+                optionsHtml += `
+                    <label class="option-label">
+                        <input type="radio" name="q-${index}" value="${opt}">
+                        <span>${opt}</span>
+                    </label>
+                `;
+            });
+
+            // 詳解區域 (預設隱藏)
+            let expHtml = '';
+            if (q.e) {
+                expHtml = `
+                    <div class="feedback-area" id="feedback-${index}">
+                        <div class="feedback-text"></div>
+                        <button class="exp-btn" onclick="toggleExp(${index})">📖 查看詳解</button>
+                        <div class="explanation-content" id="exp-content-${index}">
+                            <strong>💡 解析：</strong><br>${q.e}
+                        </div>
+                    </div>
+                `;
+            } else {
+                expHtml = `
+                    <div class="feedback-area" id="feedback-${index}">
+                        <div class="feedback-text"></div>
+                    </div>`; 
+            }
+
+            card.innerHTML = `
+                <div class="question-text">${index + 1}. ${q.t}</div>
+                <div class="options-grid">${optionsHtml}</div>
+                ${expHtml}
+            `;
+            container.appendChild(card);
+        });
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 切換詳解顯示
+    function toggleExp(index) {
+        const content = document.getElementById(`exp-content-${index}`);
+        if (content.style.display === "block") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "block";
+        }
+    }
+
+    // 確認回首頁
+    function confirmRestart() {
+        if(confirm("確定要回首頁嗎？目前的進度將會消失。")) {
+            location.reload();
+        }
+    }
+
+    // 交卷
+    function submitQuiz() {
+        if(!confirm("確定要交卷嗎？交卷後將無法修改答案。")) return;
+
+        let score = 0;
+        let total = currentQuestions.length;
+        const submitBtn = document.getElementById('submitBtn');
+
+        // 鎖定按鈕
+        submitBtn.disabled = true;
+        submitBtn.innerText = "已交卷";
+
+        currentQuestions.forEach((q, index) => {
+            const card = document.getElementById(`card-${index}`);
+            const feedbackArea = document.getElementById(`feedback-${index}`);
+            const feedbackText = feedbackArea.querySelector('.feedback-text');
+            const inputs = document.querySelectorAll(`input[name="q-${index}"]`);
+            
+            // 找出正確答案文字
+            const answerIndexMap = { "A": 0, "B": 1, "C": 2, "D": 3 };
+            const correctOptionText = q.o[answerIndexMap[q.a]];
+
+            // 檢查使用者選擇
+            const selectedInput = document.querySelector(`input[name="q-${index}"]:checked`);
+            
+            card.classList.remove('correct', 'wrong');
+            feedbackArea.style.display = 'block'; // 顯示詳解按鈕區
+
+            if (selectedInput) {
+                if (selectedInput.value === correctOptionText) {
+                    score++;
+                    card.classList.add('correct');
+                    feedbackText.style.color = '#2ecc71';
+                    feedbackText.innerHTML = `⭕ 答對了！`;
+                } else {
+                    card.classList.add('wrong');
+                    feedbackText.style.color = '#e74c3c';
+                    feedbackText.innerHTML = `❌ 答錯了。<span style="font-size:0.9em; color:#555"><br>正確答案：${correctOptionText}</span>`;
+                }
+            } else {
+                card.classList.add('wrong');
+                feedbackText.style.color = '#e74c3c';
+                feedbackText.innerHTML = `⚠️ 未作答。<span style="font-size:0.9em; color:#555"><br>正確答案：${correctOptionText}</span>`;
+            }
+
+            // 鎖定所有選項 (Disabled)
+            inputs.forEach(input => {
+                input.disabled = true;
+            });
+        });
+
+        // 顯示總分
+        const scoreHeader = document.getElementById('scoreHeader');
+        scoreHeader.innerHTML = `得分：${score} / ${total} (正確率：${Math.round((score/total)*100)}%)`;
+        scoreHeader.style.display = 'block';
+        
+        // 自動捲動到最上方看分數
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
